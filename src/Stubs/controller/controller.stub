@@ -1,0 +1,295 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use App\Http\Controllers\Controller;
+use $MODULE$\Commands\Create$CLASS$Command;
+use $MODULE$\Commands\Remove$CLASS$Command;
+use $MODULE$\Commands\Update$CLASS$Command;
+use $MODULE$\Models\$CLASS$;
+use $MODULE$\Requests\$CLASS$Request;
+use $MODULE$\Requests\$CLASS$ShowRequest;
+use $MODULE$\Resources\$CLASS$Resource;
+use $MODULE$\Resources\$CLASS$sResource;
+use $MODULE$\Contracts\Services\$CLASS$Service;
+use Illuminate\Contracts\Bus\Dispatcher;
+
+final class $CONTROLLER$Controller extends Controller
+{
+    /**
+     * @var Dispatcher
+     */
+    private $commandDispatcher;
+
+    /**
+     * @var $CLASS$Service
+     */
+    private $service;
+
+    /**
+     * $CONTROLLER$Controller constructor.
+     * @param Dispatcher $commandDispatcher
+     * @param $CLASS$Service $service
+     */
+    public function __construct(Dispatcher $commandDispatcher, $CLASS$Service $service)
+    {
+        $this->commandDispatcher = $commandDispatcher;
+        $this->service = $service;
+    }
+
+    /**
+     * @OA\Get (
+     *      path="/api/$API$",
+     *      tags={"$TAG$"},
+     *      summary="Список",
+     *      description="Получить список",
+     *
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Номер страницы",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *    ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         description="Количество данных для показа",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *    ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Фильтрация по названию",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *    ),
+     *     @OA\Parameter(
+     *         name="sort",
+     *         in="query",
+     *         description="Сортировка",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(
+     *                property="data",
+     *                ref="#/components/schemas/$CLASS$Resource"
+     *              )
+     *            )
+     *        ),
+     *        description=""
+     *    ),
+     *     security={{
+     *         "apiKey":{}
+     *     }}
+     * )
+     * @param $CLASS$ShowRequest $request
+     * @return $CLASS$sResource
+     */
+
+    public function index($CLASS$ShowRequest $request)
+    {
+        $this->authorize('view', $CLASS$::class);
+
+        return new $CLASS$sResource(
+            $this->service->getAll$CLASS$($request->getDTO())
+        );
+    }
+
+    /**
+     * @OA\Get (
+     *      path="/api/$API$/{id}",
+     *      tags={"$TAG$"},
+     *      summary="Получить данные по id",
+     *      description="Получить данные по id",
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *     ),
+     *    @OA\Response(
+     *        response=200,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(
+     *                property="data",
+     *                ref="#/components/schemas/$CLASS$Resource"
+     *              )
+     *            )
+     *        ),
+     *        description=""
+     *    ),
+     *     security={{
+     *         "apiKey":{}
+     *     }}
+     * )
+     * @param int $id
+     * @return $CLASS$Resource
+     */
+    public function show(int $id)
+    {
+        $this->authorize('view', $CLASS$::class);
+
+        return new $CLASS$Resource(
+            $this->service->get$CLASS$ById($id)
+        );
+    }
+
+
+    /**
+     * @OA\Post (
+     *    path="/api/$API$",
+     *    tags={"$TAG$"},
+     *    summary="Cоздать",
+     *    description="Cоздать",
+     *
+     *    @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/x-www-form-urlencoded",
+     *              @OA\Schema(ref="#/components/schemas/$CLASS$Request")
+     *         )
+     *     ),
+     *    @OA\Response(
+     *        response=201,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(
+     *                property="data",
+     *                ref="#/components/schemas/$CLASS$Resource"
+     *              )
+     *            )
+     *        ),
+     *        description=""
+     *    ),
+     *    security={{
+     *     "apiKey":{}
+     *   }}
+     * )
+     *
+     *
+     * @param $CLASS$Request $request
+     * @return $CLASS$Resource
+     */
+    public function store($CLASS$Request $request)
+    {
+        $this->authorize('store', $CLASS$::class);
+
+        $command = new Create$CLASS$Command(
+            $request->get('name'),
+        );
+
+        $result = $this->commandDispatcher->dispatch($command);
+
+        return new $CLASS$Resource($result);
+    }
+
+
+    /**
+     *
+     * @OA\Put (
+     *    path="/api/$API$/{id}",
+     *    tags={"$TAG$"},
+     *    summary="Редактировать",
+     *    description="Редактировать",
+     *
+     *    @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="integer")
+     *    ),
+     *    @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/x-www-form-urlencoded",
+     *              @OA\Schema(ref="#/components/schemas/$CLASS$Request")
+     *         )
+     *     ),
+     *    @OA\Response(
+     *        response=200,
+     *        @OA\MediaType(
+     *            mediaType="application/json",
+     *            @OA\Schema(
+     *              @OA\Property(
+     *                property="data",
+     *                ref="#/components/schemas/$CLASS$Resource"
+     *              )
+     *            )
+     *        ),
+     *        description=""
+     *    ),
+     *    security={{
+     *     "apiKey":{}
+     *   }}
+     * )
+     * @param int $id
+     * @param $CLASS$Request $request
+     * @return $CLASS$Resource
+     */
+    public function update(int $id, $CLASS$Request $request)
+    {
+        $this->authorize('update', $CLASS$::class);
+
+        $command = new Update$CLASS$Command(
+            $id,
+            $request->get('name'),
+        );
+
+        $result = $this->commandDispatcher->dispatch($command);
+
+        return new $CLASS$Resource($result);
+    }
+
+
+    /**
+     *
+     * @OA\Delete  (
+     *    path="/api/$API$/{id}",
+     *    tags={"$TAG$"},
+     *    summary="Удалить",
+     *    description="Удалить",
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="string")
+     *     ),
+     *    @OA\Response(
+     *        response=200,
+     *        description=""
+     *    ),
+     *    security={{
+     *     "apiKey":{}
+     *   }}
+     * )
+     * @param int $id
+     */
+    public function destroy(int $id)
+    {
+        $this->authorize('destroy', $CLASS$::class);
+
+        $command = new Remove$CLASS$Command($id);
+
+        $this->commandDispatcher->dispatch($command);
+    }
+}

@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
+use $MODULE$\Contracts\Queries\$CLASS$Query;
+use $MODULE$\Commands\Update$CLASS$Command;
+use $MODULE$\Models\$CLASS$;
+
+final class Update$CLASS$Handler
+{
+    /**
+     * @var Update$CLASS$Repository
+     */
+    private $repository;
+
+    /**
+     * @var RoleQuery
+     */
+    private $query;
+
+    /**
+     * Update$CLASS$Handler constructor.
+     * @param $CLASS$Repository $repository
+     */
+    public function __construct(Update$CLASS$Repository $repository, $CLASS$Query $query)
+    {
+        $this->repository = $repository;
+        $this->query = $query;
+    }
+
+    public function handle(Update$CLASS$Command $command)
+    {
+        $model = $this->query->findById($command->id);
+        $model->name = $command->name;
+        $this->repository->update($model);
+
+        return $model;
+    }
+}

@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Contracts\Criteria\RoleCriteria;
+use $MODULE$\Contracts\Services\$SERVICE$ as $SERVICE$Contract;
+use $MODULE$\DTO\$CLASS$DTO;
+use $MODULE$\Contracts\Queries\$CLASS$Query;
+use $MODULE$\Contracts\Queries\Pagination$CLASS$Query;
+use $MODULE$\Models\$CLASS$;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+final class $SERVICE$ implements $SERVICE$Contract
+{
+    /**
+     * @param $CLASS$DTO $dto
+     * @return LengthAwarePaginator
+     */
+    public function getAll$CLASS$($CLASS$DTO $dto): LengthAwarePaginator
+    {
+        $criteria = app()->make($CLASS$Criteria::class, ['data'=>$dto]);
+        $query = app()->make(Pagination$CLASS$Query::class);
+
+        return $query->pagination($criteria);
+    }
+
+    /**
+     * @param int $id
+     * @return $CLASS$
+     */
+    public function get$CLASS$ById(int $id): $CLASS$
+    {
+        $query = app()->make($CLASS$Query::class);
+        return $query->findById($id);
+    }
+}

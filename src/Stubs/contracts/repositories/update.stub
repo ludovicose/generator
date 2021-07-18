@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Models\$CLASS$;
+
+interface Update$CLASS$Repository
+{
+    public function update($CLASS$ $model): void;
+}

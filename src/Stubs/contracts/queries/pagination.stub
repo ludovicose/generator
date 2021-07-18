@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use $MODULE$\Contracts\Criteria\$CLASS$Criteria;
+
+interface Pagination$CLASS$Query
+{
+    public function pagination($CLASS$Criteria $criteria): LengthAwarePaginator;
+}

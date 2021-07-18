@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\DTO\$CLASS$DTO;
+use Illuminate\Foundation\Http\FormRequest;
+
+/**
+ * Class $CLASS$ShowRequest.
+ *
+ * @package $NAMESPACE$
+ */
+class $CLASS$ShowRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+
+    public function rules()
+    {
+        return [];
+    }
+
+    /**
+     * @return $CLASS$DTO
+     */
+    public function getDTO()
+    {
+        return $CLASS$DTO::fromRequest($this);
+    }
+}

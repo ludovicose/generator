@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+ /**
+  * @OA\Schema(
+  *      @OA\Property(
+  *          property="name",
+  *          type="string"
+  *      ),
+  * )
+  */
+final class $CLASS$Resource extends JsonResource
+{
+   /**
+    * Transform the resource into an array.
+    *
+    * @param  \Illuminate\Http\Request $request
+    * @return array
+    */
+   public function toArray($request)
+   {
+       return [
+            'name' => $this->name,
+       ];
+   }
+}

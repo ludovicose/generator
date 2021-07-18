@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Contracts\Repositories\Create$CLASS$Repository;
+use $MODULE$\Commands\Create$CLASS$Command;
+use $MODULE$\Models\$CLASS$;
+
+final class Create$CLASS$Handler
+{
+    /**
+     * @var Create$CLASS$Repository
+     */
+    private $repository;
+
+    /**
+     * Create$CLASS$Handler constructor.
+     * @param $CLASS$Repository $repository
+     */
+    public function __construct(Create$CLASS$Repository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function handle(Create$CLASS$Command $command)
+    {
+        $model = new $CLASS$();
+        $model->name = $command->name;
+        $this->repository->create($model);
+
+        return $model;
+    }
+}

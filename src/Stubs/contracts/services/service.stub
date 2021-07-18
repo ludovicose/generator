@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Models\$CLASS$;
+use $MODULE$\DTO\$CLASS$DTO;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+interface $SERVICE$
+{
+    public function getAll$CLASS$($CLASS$DTO $dto): LengthAwarePaginator;
+
+    public function get$CLASS$ById(int $id): $CLASS$;
+}

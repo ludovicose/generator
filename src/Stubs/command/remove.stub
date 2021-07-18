@@ -1,0 +1,22 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+final class Remove$CLASS$Command
+{
+    /**
+     * @var int
+     */
+    public $id;
+
+    /**
+     * Remove$CLASS$Command constructor.
+     * @param int $id
+     */
+    public function __construct(int $id)
+    {
+        $this->id = $id;
+    }
+}

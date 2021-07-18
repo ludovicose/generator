@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+/**
+ * Class $CLASS$sResource.
+ *
+ * @package $NAMESPACE$
+ */
+final class $CLASS$sResource extends ResourceCollection
+{
+   /**
+    * Transform the resource into an array.
+    *
+    * @param  \Illuminate\Http\Request $request
+    * @return array
+    */
+   public function toArray($request)
+   {
+        return [
+            'data' => $CLASS$Resource::collection($this->collection),
+        ];
+   }
+}

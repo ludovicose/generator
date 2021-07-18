@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
+/**
+ *  * @OA\Schema(
+ *     required={"name"},
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="Название"
+ *     )
+ * )
+ *
+ */
+final class $CLASS$Request extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|string',
+        ];
+    }
+
+    public function messages()
+    {
+        return [];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+}

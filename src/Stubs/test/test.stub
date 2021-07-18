@@ -1,0 +1,131 @@
+<?php
+
+namespace Tests\Feature;
+
+use $MODULE$\Models\$CLASS$;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class $CLASS$Test extends TestCase
+{
+    use RefreshDatabase;
+    use WithFaker;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+        $this->actingAs(User::factory()->create());
+    }
+
+    public function testGetAll$CLASS$s()
+    {
+        $CLASS$::factory()->count(20)->create();
+
+        $response = $this->get(route('$API$.index'));
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'name',
+                    ]
+                ],
+                'links' => [
+                    'first',
+                    'last',
+                    'prev',
+                    'next',
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'links',
+                ]
+            ]);
+    }
+
+
+    public function testGet$CLASS$ById()
+    {
+        $model = $CLASS$::factory()->create();
+
+        $response = $this->get(route('$API$.index', ['id' => $model->id]));
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'name',
+                    ]
+                ],
+                'links' => [
+                    'first',
+                    'last',
+                    'prev',
+                    'next',
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'links',
+                ]
+            ]);
+    }
+
+
+    public function testCreate$CLASS$()
+    {
+        $data = [
+            'name' => $this->faker->name,
+        ];
+
+        $response = $this->postJson(
+            route('$API$.store'),
+            $data
+        );
+
+        $response->assertStatus(201)
+            ->assertJsonStructure([
+                'data' => [
+                    'name',
+                ],
+            ]);
+    }
+
+    public function testUpdate$CLASS$()
+    {
+        $model = $CLASS$::factory()->create();
+
+        $data = [
+            'name' => $this->faker->name,
+        ];
+
+        $response = $this->putJson(
+            route('$API$.update', ['role' => $model->id]),
+            $data
+        );
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [
+                    'name',
+                ],
+            ]);
+    }
+
+    public function testDelete$CLASS$()
+    {
+        $model = $CLASS$::factory()->create();
+
+        $response = $this->delete(
+            route('$API$.destroy', ['$API$' => $model->id]),
+        );
+
+        $response->assertStatus(200);
+    }
+}

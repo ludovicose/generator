@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Contracts\Queries\$CLASS$Query as $CLASS$QueryContract;
+use $MODULE$\Contracts\Queries\Pagination$CLASS$Query;
+use $MODULE$\Queries\Eloquent\$CLASS$Query;
+use $MODULE$\Contracts\Repositories\Create$CLASS$Repository;
+use $MODULE$\Contracts\Repositories\Remove$CLASS$Repository;
+use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
+use $MODULE$\Repositories\Eloquent\$CLASS$Repository;
+use Illuminate\Support\ServiceProvider;
+
+class RepositoryServiceProvider extends ServiceProvider
+{
+    public $bindings = [
+        $CLASS$QueryContract::class => $CLASS$Query::class,
+        Pagination$CLASS$Query::class => RoleQuery::class,
+        Create$CLASS$Repository::class => $CLASS$Repository::class,
+        Update$CLASS$Repository::class => $CLASS$Repository::class,
+        Remove$CLASS$Repository::class => $CLASS$Repository::class,
+    ];
+}

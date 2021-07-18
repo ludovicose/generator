@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Database\Factories\$CLASS$Factory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use $MODULE$\Contracts\Criteria\$CLASS$Criteria;
+
+/**
+ * Class $CLASS$.
+ *
+ * @package $NAMESPACE$
+ */
+class $CLASS$ extends Model
+{
+    use SoftDeletes;
+    use HasFactory;
+
+    protected $fillable = [];
+
+    protected static function newFactory()
+    {
+        return $CLASS$Factory::new();
+    }
+
+    /**
+     * @param $query
+     * @param Criteria $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $CLASS$Criteria $filters)
+    {
+        return $filters->apply($query);
+    }
+}

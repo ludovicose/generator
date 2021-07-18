@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Commands\Create$CLASS$Command;
+use $MODULE$\Commands\Update$CLASS$Command;
+use $MODULE$\Commands\Remove$CLASS$Command;
+use $MODULE$\Handlers\Create$CLASS$Handler;
+use $MODULE$\Handlers\Update$CLASS$Handler;
+use $MODULE$\Handlers\Remove$CLASS$Handler;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\ServiceProvider;
+
+class CommandBusServiceProviders extends ServiceProvider
+{
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerCommandHandlers();
+    }
+
+    private function registerCommandHandlers()
+    {
+        Bus::map([
+            Create$CLASS$Command::class => Create$CLASS$Handler::class,
+            Update$CLASS$Command::class => Update$CLASS$Handler::class,
+            Remove$CLASS$Command::class => Remove$CLASS$Handler::class,
+        ]);
+    }
+}

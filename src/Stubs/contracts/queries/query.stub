@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Support\Collection;
+use $MODULE$\Models\$CLASS$;
+
+interface $CLASS$Query
+{
+    public function all(): Collection;
+
+    public function findById(int $id): $CLASS$;
+}

@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Http\Request;
+
+final class $CLASS$DTO
+{
+    /**
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * @var string|null
+     */
+    public $sort;
+
+    /**
+     * @var string|null
+     */
+    public $name;
+
+    /**
+     * @var int
+     */
+    public $page;
+
+    /**
+     * @param Request $request
+     */
+    public static function fromRequest(Request $request): self
+    {
+        $self = new self();
+        $self->limit = (int)$request->get('limit', 20);
+        $self->sort = $request->get('sort');
+        $self->page = (int)$request->get('page', 1);
+        $self->name = $request->get('name');
+        return $self;
+    }
+
+    public function toArray(): array
+    {
+        $array = (array) $this;
+        return array_filter($array, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+    }
+}

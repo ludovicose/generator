@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Models\$CLASS$;
+
+interface Create$CLASS$Repository
+{
+    public function create($CLASS$ $model): void;
+}
