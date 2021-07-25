@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ludovicose\Generator\Console;
 
 use Illuminate\Console\Command;
+use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 use Ludovicose\Generator\Generators\Commands\CreateCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\RemoveCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
@@ -15,6 +16,7 @@ use Ludovicose\Generator\Generators\Contract\QueryContractGenerator;
 use Ludovicose\Generator\Generators\Contract\QueryPaginationContractGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryCreateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryRemoveContractGenerator;
+use Ludovicose\Generator\Generators\Providers\RegisterServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Providers\RepositoryServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryUpdateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\ServiceContractGenerator;
@@ -25,10 +27,12 @@ use Ludovicose\Generator\Generators\Handlers\CreateHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\RemoveHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\UpdateHandlerGenerator;
 use Ludovicose\Generator\Generators\Model\ModelGenerator;
+use Ludovicose\Generator\Generators\Providers\RouterServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Queries\QueryGenerator;
 use Ludovicose\Generator\Generators\Repositories\RepositoryGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestShowGenerator;
+use Ludovicose\Generator\Generators\Router\RouterGenerator;
 use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
 use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
 use Ludovicose\Generator\Generators\Service\ServiceGenerator;
@@ -51,15 +55,15 @@ final class Generate extends Command
         $module = $this->argument('module');
         $name = $this->argument('name');
 
-        if ($this->confirm('Would you like to create a Controller, Request, Resource, Service, Dto? [y|N]')) {
+        if ($this->confirm('Would you like to create a Request, Controller, Service, Resource, Repository, Commands, Providers, Policy, Dto? [y|N]')) {
 
             $this->generateRequest($module, $name);
-
-            $this->generateResource($module, $name);
 
             $this->generateController($module, $name);
 
             $this->generateService($module, $name);
+
+            $this->generateResource($module, $name);
 
             $this->generateModel($module, $name);
 
@@ -69,13 +73,16 @@ final class Generate extends Command
 
             $this->generateDto($module, $name);
 
-            $this->generateTest($module, $name);
-
-            $this->generateFactoryAndSeed($name);
-
             $this->generateProviders($module, $name);
 
             $this->generatePolicy($module, $name);
+
+            $this->generateRouter($module, $name);
+        }
+
+        if ($this->confirm('Would you like to create a Test, Factory, Seed? [y|N]')) {
+            $this->generateTest($module, $name);
+            $this->generateFactoryAndSeed($name);
         }
     }
 
@@ -85,18 +92,27 @@ final class Generate extends Command
      */
     protected function generateRequest($module, $name)
     {
-        (new RequestGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RequestGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
+            $this->info('Request created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Request has exists. {$exception->getMessage()}");
+        }
 
-        (new RequestShowGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RequestShowGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Request created successfully.');
+            $this->info('Show Request created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("ShowRequest has exists. {$exception->getMessage()}");
+        }
     }
 
     /**
@@ -105,27 +121,41 @@ final class Generate extends Command
      */
     protected function generateResource($module, $name)
     {
-        (new ResourcesGenerate([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new ResourcesGenerate([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new ResourceGenerate([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Resources created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Resources has exists. {$exception->getMessage()}");
+        }
 
-        $this->info('Resource created successfully.');
+        try {
+            (new ResourceGenerate([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Resource created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Resource has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateController($module, $name)
     {
-        (new ControllerGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new ControllerGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Controller created successfully.');
+            $this->info('Controller created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Controller has exists. {$exception->getMessage()}");
+        }
     }
 
     /**
@@ -134,56 +164,108 @@ final class Generate extends Command
      */
     protected function generateService($module, $name)
     {
-        (new ServiceGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new ServiceGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new ServiceContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Services created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Service has exists. {$exception->getMessage()}");
+        }
 
-        (new CreateCommandGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new ServiceContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new CreateHandlerGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Services Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Service Contract has exists. {$exception->getMessage()}");
+        }
 
-        (new UpdateCommandGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new CreateCommandGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new UpdateHandlerGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Create Command created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Create Command has exists. {$exception->getMessage()}");
+        }
 
-        (new RemoveCommandGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new CreateHandlerGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new RemoveHandlerGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Create Handler created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Create Handler has exists. {$exception->getMessage()}");
+        }
 
+        try {
+            (new UpdateCommandGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Services and Commands created successfully.');
+            $this->info('Update Command created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Update Command has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new UpdateHandlerGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Update Handler created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Update Handler has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RemoveCommandGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Remove Command created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Remove Command has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RemoveHandlerGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Remove Handler created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Remove Handler has exists. {$exception->getMessage()}");
+        }
+
     }
 
     protected function generateModel($module, $name)
     {
-        (new ModelGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new ModelGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Remove Model created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Model has exists. {$exception->getMessage()}");
+        }
     }
 
     /**
@@ -192,42 +274,82 @@ final class Generate extends Command
      */
     protected function generateRepository($module, $name)
     {
-        (new RepositoryCreateContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RepositoryCreateContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new RepositoryUpdateContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Create Repository Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Repository Create Contract has exists. {$exception->getMessage()}");
+        }
 
-        (new RepositoryRemoveContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RepositoryUpdateContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new QueryPaginationContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Update Repository Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Repository Update Contract has exists. {$exception->getMessage()}");
+        }
 
-        (new QueryContractGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RepositoryRemoveContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new RepositoryGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('Remove Repository Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Repository Remove Contract has exists. {$exception->getMessage()}");
+        }
 
-        (new QueryGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new QueryPaginationContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Repository created successfully.');
+            $this->info('Query Pagination Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Query Pagination Contract has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new QueryContractGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Query Contract created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Query Contract has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RepositoryGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Repository created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Repository has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new QueryGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Query created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Query has exists. {$exception->getMessage()}");
+        }
     }
 
     /**
@@ -236,70 +358,151 @@ final class Generate extends Command
      */
     protected function generateCriteria($module, $name)
     {
-        (new CriteriaGenerator([
-            'module' => $module,
-            'name' => $name,
-        ]))->run();
+        try {
+            (new CriteriaGenerator([
+                'module' => $module,
+                'name' => $name,
+            ]))->run();
 
-        (new CriteriaContractGenerator([
-            'module' => $module,
-            'name' => $name,
-        ]))->run();
+            $this->info('Criteria created successfully.');
 
-        (new CriteriaTraitGenerator([
-            'module' => $module,
-            'name' => $name,
-        ]))->run();
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Criteria has exists. {$exception->getMessage()}");
+        }
 
+        try {
+            (new CriteriaContractGenerator([
+                'module' => $module,
+                'name' => $name,
+            ]))->run();
 
-        $this->info('Criteria created successfully.');
+            $this->info('Criteria Contract created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Criteria Contract has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new CriteriaTraitGenerator([
+                'module' => $module,
+                'name' => $name,
+            ]))->run();
+
+            $this->info('Criteria Trait created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Criteria Trait has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateDto($module, $name)
     {
-        (new DtoGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new DtoGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Dto created successfully.');
+            $this->info('Dto created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Dto has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateProviders($module, $name)
     {
-        (new CommandServiceProviderGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new CommandServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        (new RepositoryServiceProviderGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+            $this->info('CommandServiceProvider created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("CommandServiceProvider has exists. {$exception->getMessage()}");
+        }
 
-        (new BindServiceProviderGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new RepositoryServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Providers created successfully.');
+            $this->info('RepositoryServiceProviders created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("RepositoryServiceProviders has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new BindServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('BindServiceProvider created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("BindServiceProvider has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RouterServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('RouterServiceProvider created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("RouterServiceProvider has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RegisterServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('RegisterServiceProviderGenerator created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("RegisterServiceProviderGenerator has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateTest($module, $name)
     {
-        (new TestGenerator([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new TestGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Test created successfully.');
+            $this->info('Test created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Test has exists. {$exception->getMessage()}");
+        }
+    }
+
+    protected function generateRouter($module, $name)
+    {
+        try {
+            (new RouterGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Router created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Router has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateFactoryAndSeed($name)
     {
         $this->call('make:factory', [
             'name' => $name . 'Factory',
-            '--model' => 'Models\\' . $name
+            '--model' => $name
         ]);
 
         $this->call('make:seeder', [
@@ -309,11 +512,15 @@ final class Generate extends Command
 
     protected function generatePolicy($module, $name)
     {
-        (new PolicyGenerate([
-            'name' => $name,
-            'module' => $module,
-        ]))->run();
+        try {
+            (new PolicyGenerate([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
 
-        $this->info('Policy created successfully.');
+            $this->info('Policy created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Policy has exists. {$exception->getMessage()}");
+        }
     }
 }

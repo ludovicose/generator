@@ -5,14 +5,14 @@ namespace Ludovicose\Generator\Generators\Providers;
 
 use Ludovicose\Generator\Generator;
 
-final class BindServiceProviderGenerator extends Generator
+final class RegisterServiceProviderGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'provider/bind';
+    protected $stub = 'provider/register';
 
 
     /**
@@ -32,6 +32,6 @@ final class BindServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "Bind{$this->getName()}ServiceProvider.php";
+        return parent::getPath() . "RegisterModuleServiceProvider.php";
     }
 }

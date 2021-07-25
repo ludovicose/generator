@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $NAMESPACE$
 
-use $MODULE$\Contracts\Criteria\RoleCriteria;
+use $MODULE$\Contracts\Criteria\$CLASS$Criteria;
 use $MODULE$\Contracts\Services\$SERVICE$ as $SERVICE$Contract;
 use $MODULE$\DTO\$CLASS$DTO;
 use $MODULE$\Contracts\Queries\$CLASS$Query;

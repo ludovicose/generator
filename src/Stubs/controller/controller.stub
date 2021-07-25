@@ -241,16 +241,16 @@ final class $CONTROLLER$Controller extends Controller
      *     "apiKey":{}
      *   }}
      * )
-     * @param int $id
+     * @param int $$API$
      * @param $CLASS$Request $request
      * @return $CLASS$Resource
      */
-    public function update(int $id, $CLASS$Request $request)
+    public function update(int $$API$, $CLASS$Request $request)
     {
         $this->authorize('update', $CLASS$::class);
 
         $command = new Update$CLASS$Command(
-            $id,
+            $$API$,
             $request->get('name'),
         );
 

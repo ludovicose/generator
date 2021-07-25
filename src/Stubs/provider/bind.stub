@@ -10,7 +10,7 @@ use $MODULE$\Criteria\Eloquent\$CLASS$Criteria;
 use $MODULE$\Services\$CLASS$Service;
 use Illuminate\Support\ServiceProvider;
 
-class BindServiceProvider extends ServiceProvider
+class Bind$CLASS$ServiceProvider extends ServiceProvider
 {
     public $bindings = [
         $CLASS$ServiceContract::class => $CLASS$Service::class,

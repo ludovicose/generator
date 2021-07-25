@@ -5,6 +5,7 @@ namespace Ludovicose\Generator;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 
 abstract class Generator
 {
@@ -249,6 +250,9 @@ abstract class Generator
             case ('resource' === $class):
                 $path = config('generator.paths.resource', 'Resource');
                 break;
+            case ('router' === $class):
+                $path = config('generator.paths.router', 'Routers');
+                break;
             case ('command' === $class):
                 $path = config('generator.paths.command', 'Commands');
                 break;
@@ -285,16 +289,15 @@ abstract class Generator
     public function run(): int
     {
         if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
-            throw new \Exception("File Already Exists $path");
+            throw new FileAlreadyExistsExceptions("File Already Exists $path");
         }
 
         if (!$this->filesystem->isDirectory($dir = dirname($path))) {
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
 
-        return $this->filesystem->put($path, $this->getStub());
+        return $this->filesystem->put($path, $this->sortImports($this->getStub()));
     }
-
 
     /**
      * Determinte whether the given key exist in options array.
@@ -375,5 +378,18 @@ abstract class Generator
     public function getPluralName(): string
     {
         return Str::plural(lcfirst(ucwords($this->getClass())));
+    }
+
+    protected function sortImports(string $stub): string
+    {
+        if (preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $stub, $match)) {
+            $imports = explode("\n", trim($match['imports']));
+
+            sort($imports);
+
+            return str_replace(trim($match['imports']), implode("\n", $imports), $stub);
+        }
+
+        return $stub;
     }
 }
