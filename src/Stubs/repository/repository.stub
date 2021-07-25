@@ -13,7 +13,7 @@ use $MODULE$\Models\$CLASS$;
 final class $CLASS$Repository implements Create$CLASS$Repository,Update$CLASS$Repository,Remove$CLASS$Repository
 {
     /**
-     * @param $CLASS$ $role
+     * @param $CLASS$ $model
      */
     public function create($CLASS$ $model): void
     {

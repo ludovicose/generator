@@ -17,13 +17,10 @@ final class Update$CLASS$Handler
     private $repository;
 
     /**
-     * @var RoleQuery
      */
     private $query;
 
     /**
-     * Update$CLASS$Handler constructor.
-     * @param $CLASS$Repository $repository
      */
     public function __construct(Update$CLASS$Repository $repository, $CLASS$Query $query)
     {
