@@ -13,7 +13,7 @@ use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
 use $MODULE$\Repositories\Eloquent\$CLASS$Repository;
 use Illuminate\Support\ServiceProvider;
 
-class RepositoryServiceProvider extends ServiceProvider
+class Repository$CLASS$ServiceProvider extends ServiceProvider
 {
     public $bindings = [
         $CLASS$QueryContract::class => $CLASS$Query::class,

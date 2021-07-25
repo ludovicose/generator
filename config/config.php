@@ -17,6 +17,7 @@ return [
         'policy' => 'Policies',
         'resource' => 'Resources',
         'providers' => 'Providers',
+        'router' => 'Routers',
         'command' => 'Commands',
         'handler' => 'Handlers',
         'criteriaTrait' => 'Traits/Criteria',

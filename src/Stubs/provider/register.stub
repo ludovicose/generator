@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Support\ServiceProvider;
+
+class RegisterModuleServiceProvider extends ServiceProvider
+{
+  /**
+       * Register any application services.
+       *
+       * @return void
+       */
+      public function register()
+      {
+        $this->app->register(Bind$CLASS$ServiceProvider::class);
+        $this->app->register(CommandBus$CLASS$ServiceProviders::class);
+        $this->app->register(Repository$CLASS$ServiceProvider::class);
+        $this->app->register(Router$CLASS$ServiceProvider::class);
+      }
+
+      /**
+       * Bootstrap any application services.
+       *
+       * @return void
+       */
+      public function boot()
+      {
+          //
+      }
+}

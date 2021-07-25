@@ -106,7 +106,7 @@ class $CLASS$Test extends TestCase
         ];
 
         $response = $this->putJson(
-            route('$API$.update', ['id' => $model->id]),
+            route('$API$.update', ['$API$' => $model->id]),
             $data
         );
 

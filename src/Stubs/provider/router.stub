@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\Routers\$CLASS$RouteRegistrar;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Support\ServiceProvider;
+
+class Router$CLASS$ServiceProvider extends ServiceProvider
+{
+  /**
+       * Register any application services.
+       *
+       * @return void
+       */
+      public function register()
+      {
+           (new $CLASS$RouteRegistrar($this->app->make(Registrar::class)))
+            ->register();
+      }
+
+      /**
+       * Bootstrap any application services.
+       *
+       * @return void
+       */
+      public function boot()
+      {
+          //
+      }
+}

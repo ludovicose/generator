@@ -16,6 +16,7 @@ use Ludovicose\Generator\Generators\Contract\QueryContractGenerator;
 use Ludovicose\Generator\Generators\Contract\QueryPaginationContractGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryCreateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryRemoveContractGenerator;
+use Ludovicose\Generator\Generators\Providers\RegisterServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Providers\RepositoryServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryUpdateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\ServiceContractGenerator;
@@ -26,10 +27,12 @@ use Ludovicose\Generator\Generators\Handlers\CreateHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\RemoveHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\UpdateHandlerGenerator;
 use Ludovicose\Generator\Generators\Model\ModelGenerator;
+use Ludovicose\Generator\Generators\Providers\RouterServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Queries\QueryGenerator;
 use Ludovicose\Generator\Generators\Repositories\RepositoryGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestShowGenerator;
+use Ludovicose\Generator\Generators\Router\RouterGenerator;
 use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
 use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
 use Ludovicose\Generator\Generators\Service\ServiceGenerator;
@@ -73,6 +76,8 @@ final class Generate extends Command
             $this->generateProviders($module, $name);
 
             $this->generatePolicy($module, $name);
+
+            $this->generateRouter($module, $name);
         }
 
         if ($this->confirm('Would you like to create a Test, Factory, Seed? [y|N]')) {
@@ -345,8 +350,6 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Query has exists. {$exception->getMessage()}");
         }
-
-        $this->info('Repository created successfully.');
     }
 
     /**
@@ -404,7 +407,6 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Dto has exists. {$exception->getMessage()}");
         }
-        $this->info('Dto created successfully.');
     }
 
     protected function generateProviders($module, $name)
@@ -442,6 +444,30 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("BindServiceProvider has exists. {$exception->getMessage()}");
         }
+
+        try {
+            (new RouterServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('RouterServiceProvider created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("RouterServiceProvider has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new RegisterServiceProviderGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('RegisterServiceProviderGenerator created successfully.');
+
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("RegisterServiceProviderGenerator has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateTest($module, $name)
@@ -456,15 +482,27 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Test has exists. {$exception->getMessage()}");
         }
+    }
 
-        $this->info('Test created successfully.');
+    protected function generateRouter($module, $name)
+    {
+        try {
+            (new RouterGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Router created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Router has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateFactoryAndSeed($name)
     {
         $this->call('make:factory', [
             'name' => $name . 'Factory',
-            '--model' => 'Models\\' . $name
+            '--model' => $name
         ]);
 
         $this->call('make:seeder', [
