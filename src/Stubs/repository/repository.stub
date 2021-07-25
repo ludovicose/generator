@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 $NAMESPACE$
 
-use Illuminate\Support\Collection;
 use $MODULE$\Contracts\Repositories\Create$CLASS$Repository;
 use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
 use $MODULE$\Contracts\Repositories\Remove$CLASS$Repository;

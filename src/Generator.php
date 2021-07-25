@@ -293,9 +293,8 @@ abstract class Generator
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
 
-        return $this->filesystem->put($path, $this->getStub());
+        return $this->filesystem->put($path, $this->sortImports($this->getStub()));
     }
-
 
     /**
      * Determinte whether the given key exist in options array.
@@ -376,5 +375,18 @@ abstract class Generator
     public function getPluralName(): string
     {
         return Str::plural(lcfirst(ucwords($this->getClass())));
+    }
+
+    protected function sortImports(string $stub): string
+    {
+        if (preg_match('/(?P<imports>(?:use [^;]+;$\n?)+)/m', $stub, $match)) {
+            $imports = explode("\n", trim($match['imports']));
+
+            sort($imports);
+
+            return str_replace(trim($match['imports']), implode("\n", $imports), $stub);
+        }
+
+        return $stub;
     }
 }

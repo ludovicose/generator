@@ -32,6 +32,6 @@ final class RepositoryServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "RepositoryServiceProvider.php";
+        return parent::getPath() . "Repository{$this->getName()}ServiceProvider.php";
     }
 }

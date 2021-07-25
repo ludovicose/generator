@@ -32,6 +32,6 @@ final class BindServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "BindServiceProvider.php";
+        return parent::getPath() . "Bind{$this->getName()}ServiceProvider.php";
     }
 }

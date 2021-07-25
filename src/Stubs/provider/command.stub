@@ -15,6 +15,12 @@ use Illuminate\Support\ServiceProvider;
 
 class CommandBusServiceProviders extends ServiceProvider
 {
+    private $maps = [
+        Create$CLASS$Command::class => Create$CLASS$Handler::class,
+        Update$CLASS$Command::class => Update$CLASS$Handler::class,
+        Remove$CLASS$Command::class => Remove$CLASS$Handler::class,
+    ];
+
     /**
      * Bootstrap services.
      *
@@ -27,10 +33,6 @@ class CommandBusServiceProviders extends ServiceProvider
 
     private function registerCommandHandlers()
     {
-        Bus::map([
-            Create$CLASS$Command::class => Create$CLASS$Handler::class,
-            Update$CLASS$Command::class => Update$CLASS$Handler::class,
-            Remove$CLASS$Command::class => Remove$CLASS$Handler::class,
-        ]);
+        Bus::map($this->maps);
     }
 }
