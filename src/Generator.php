@@ -5,6 +5,7 @@ namespace Ludovicose\Generator;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
+use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 
 abstract class Generator
 {
@@ -285,7 +286,7 @@ abstract class Generator
     public function run(): int
     {
         if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
-            throw new \Exception("File Already Exists $path");
+            throw new FileAlreadyExistsExceptions("File Already Exists $path");
         }
 
         if (!$this->filesystem->isDirectory($dir = dirname($path))) {
