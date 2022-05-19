@@ -32,6 +32,6 @@ final class RouterServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "Router{$this->getName()}ServiceProvider.php";
+        return parent::getPath() . "RouterServiceProvider.php";
     }
 }

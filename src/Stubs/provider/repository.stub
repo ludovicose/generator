@@ -13,9 +13,9 @@ use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
 use $MODULE$\Repositories\Eloquent\$CLASS$Repository;
 use Illuminate\Support\ServiceProvider;
 
-class Repository$CLASS$ServiceProvider extends ServiceProvider
+class RepositoryServiceProvider extends ServiceProvider
 {
-    public $bindings = [
+    public array $bindings = [
         $CLASS$QueryContract::class => $CLASS$Query::class,
         Pagination$CLASS$Query::class => $CLASS$Query::class,
         Create$CLASS$Repository::class => $CLASS$Repository::class,

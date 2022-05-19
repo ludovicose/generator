@@ -32,6 +32,6 @@ final class CommandServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "CommandBus{$this->getName()}ServiceProviders.php";
+        return parent::getPath() . "CommandBusServiceProviders.php";
     }
 }
