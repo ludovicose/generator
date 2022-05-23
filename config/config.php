@@ -9,7 +9,6 @@ return [
         'repositories' => 'Repositories/Eloquent',
         'queries' => 'Queries/Eloquent',
         'controllers' => 'Controllers/Api',
-        'criteria' => 'Criteria/Eloquent',
         'services' => 'Services',
         'tests' => 'tests/Feature',
         'dto' => 'DTO',
@@ -20,10 +19,8 @@ return [
         'router' => 'Routers',
         'command' => 'Commands',
         'handler' => 'Handlers',
-        'criteriaTrait' => 'Traits/Criteria',
         'serviceContract' => 'Contracts/Services',
         'repositoryContract' => 'Contracts/Repositories',
         'queryContract' => 'Contracts/Queries',
-        'criteriaContract' => 'Contracts/Criteria',
     ],
 ];

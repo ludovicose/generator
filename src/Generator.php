@@ -214,26 +214,17 @@ abstract class Generator
             case ('providers' === $class):
                 $path = config('generator.paths.providers', 'Providers');
                 break;
-            case ('criteria' === $class):
-                $path = config('generator.paths.criteria', 'Criteria');
-                break;
             case ('services' === $class):
                 $path = config('generator.paths.service', 'Services');
                 break;
             case ('serviceContract' === $class):
                 $path = config('generator.paths.serviceContract', 'Contracts/Services');
                 break;
-            case ('criteriaTrait' === $class):
-                $path = config('generator.paths.criteriaTrait', 'Traits');
-                break;
             case ('repositoryContract' === $class):
                 $path = config('generator.paths.repositoryContract', 'Contracts/Repositories');
                 break;
             case ('queryContract' === $class):
                 $path = config('generator.paths.queryContract', 'Contracts/Queries');
-                break;
-            case ('criteriaContract' === $class):
-                $path = config('generator.paths.criteriaContract', 'Contracts/Criteria');
                 break;
             case ('tests' === $class):
                 $path = config('generator.paths.tests', 'tests');

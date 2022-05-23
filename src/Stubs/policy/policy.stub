@@ -3,6 +3,8 @@
 $NAMESPACE$
 
 use $APPNAME$Models\User;
+use $MODULE$\Requests\$CLASS$Request;
+use $MODULE$\Requests\$CLASS$ShowRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 /**
@@ -14,46 +16,27 @@ class $CLASS$Policy
 {
    use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view the category.
-     *
-     * @param User $user
-     * @return mixed
-     */
-    public function view(User $user)
+    public function index(User $user, $CLASS$ShowRequest $request): bool
     {
        return true;
     }
 
-    /**
-     * Determine whether the user can create categories.
-     *
-     * @param  User $user
-     * @return mixed
-     */
-    public function store(User $user)
-    {
-       return true;
-    }
-
-    /**
-     * Determine whether the user can update the category.
-     *
-     * @param  User $user
-     * @return mixed
-     */
-    public function update(User $user)
+    public function show(User $user, int|string $id): bool
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can delete the category.
-     *
-     * @param  User $user
-     * @return mixed
-     */
-    public function destroy(User $user)
+    public function store(User $user, $CLASS$Request $request): bool
+    {
+       return true;
+    }
+
+    public function update(User $user, $CLASS$Request $request): bool
+    {
+        return true;
+    }
+
+    public function destroy(User $user, int|string $id): bool
     {
         return true;
     }

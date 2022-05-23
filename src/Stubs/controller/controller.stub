@@ -18,21 +18,11 @@ use Illuminate\Contracts\Bus\Dispatcher;
 
 final class $CONTROLLER$Controller extends Controller
 {
-    /**
-     * @var Dispatcher
-     */
-    private $commandDispatcher;
+    private Dispatcher $commandDispatcher;
 
-    /**
-     * @var $CLASS$Service
-     */
-    private $service;
+    private $CLASS$Service $service;
 
-    /**
-     * $CONTROLLER$Controller constructor.
-     * @param Dispatcher $commandDispatcher
-     * @param $CLASS$Service $service
-     */
+
     public function __construct(Dispatcher $commandDispatcher, $CLASS$Service $service)
     {
         $this->commandDispatcher = $commandDispatcher;
@@ -99,13 +89,11 @@ final class $CONTROLLER$Controller extends Controller
      *         "apiKey":{}
      *     }}
      * )
-     * @param $CLASS$ShowRequest $request
-     * @return $CLASS$sResource
      */
 
-    public function index($CLASS$ShowRequest $request)
+    public function index($CLASS$ShowRequest $request): $CLASS$sResource
     {
-        $this->authorize('view', $CLASS$::class);
+        $this->authorize('index', [$CLASS$::class, $request]);
 
         return new $CLASS$sResource(
             $this->service->getAll$CLASS$($request->getDTO())
@@ -142,12 +130,10 @@ final class $CONTROLLER$Controller extends Controller
      *         "apiKey":{}
      *     }}
      * )
-     * @param int $id
-     * @return $CLASS$Resource
      */
-    public function show(int $id)
+    public function show(string|int $id): $CLASS$Resource
     {
-        $this->authorize('view', $CLASS$::class);
+        $this->authorize('show', [$CLASS$::class, $id]);
 
         return new $CLASS$Resource(
             $this->service->get$CLASS$ById($id)
@@ -185,14 +171,10 @@ final class $CONTROLLER$Controller extends Controller
      *     "apiKey":{}
      *   }}
      * )
-     *
-     *
-     * @param $CLASS$Request $request
-     * @return $CLASS$Resource
      */
-    public function store($CLASS$Request $request)
+    public function store($CLASS$Request $request): $CLASS$Resource
     {
-        $this->authorize('store', $CLASS$::class);
+        $this->authorize('store', [$CLASS$::class, $request]);
 
         $command = new Create$CLASS$Command(
             $request->get('name'),
@@ -241,17 +223,14 @@ final class $CONTROLLER$Controller extends Controller
      *     "apiKey":{}
      *   }}
      * )
-     * @param int $$API$
-     * @param $CLASS$Request $request
-     * @return $CLASS$Resource
      */
-    public function update(int $$API$, $CLASS$Request $request)
+    public function update(int|string $$API$, $CLASS$Request $request): $CLASS$Resource
     {
-        $this->authorize('update', $CLASS$::class);
+        $this->authorize('update', [$CLASS$::class, $request]);
 
         $command = new Update$CLASS$Command(
             $$API$,
-            $request->get('name'),
+            $request->get('name')
         );
 
         $result = $this->commandDispatcher->dispatch($command);
@@ -282,11 +261,10 @@ final class $CONTROLLER$Controller extends Controller
      *     "apiKey":{}
      *   }}
      * )
-     * @param int $id
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
-        $this->authorize('destroy', $CLASS$::class);
+        $this->authorize('destroy', [$CLASS$::class, $id]);
 
         $command = new Remove$CLASS$Command($id);
 

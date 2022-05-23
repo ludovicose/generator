@@ -6,17 +6,8 @@ $NAMESPACE$
 
 final class Remove$CLASS$Command
 {
-    /**
-     * @var int
-     */
-    public $id;
-
-    /**
-     * Remove$CLASS$Command constructor.
-     * @param int $id
-     */
-    public function __construct(int $id)
+    public function __construct(public string|int $id)
     {
-        $this->id = $id;
+
     }
 }

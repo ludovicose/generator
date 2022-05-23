@@ -8,10 +8,10 @@ use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 use Ludovicose\Generator\Generators\Commands\CreateCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\RemoveCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
+use Ludovicose\Generator\Generators\Dto\ShowDTOGenerator;
 use Ludovicose\Generator\Generators\Policy\PolicyGenerate;
 use Ludovicose\Generator\Generators\Providers\BindServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Providers\CommandServiceProviderGenerator;
-use Ludovicose\Generator\Generators\Contract\CriteriaContractGenerator;
 use Ludovicose\Generator\Generators\Contract\QueryContractGenerator;
 use Ludovicose\Generator\Generators\Contract\QueryPaginationContractGenerator;
 use Ludovicose\Generator\Generators\Contract\RepositoryCreateContractGenerator;
@@ -21,7 +21,6 @@ use Ludovicose\Generator\Generators\Providers\RepositoryServiceProviderGenerator
 use Ludovicose\Generator\Generators\Contract\RepositoryUpdateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\ServiceContractGenerator;
 use Ludovicose\Generator\Generators\Controller\ControllerGenerator;
-use Ludovicose\Generator\Generators\Criteria\CriteriaGenerator;
 use Ludovicose\Generator\Generators\Dto\DTOGenerator;
 use Ludovicose\Generator\Generators\Handlers\CreateHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\RemoveHandlerGenerator;
@@ -37,7 +36,6 @@ use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
 use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
 use Ludovicose\Generator\Generators\Service\ServiceGenerator;
 use Ludovicose\Generator\Generators\Test\TestGenerator;
-use Ludovicose\Generator\Generators\Traits\Criteria\CriteriaTraitGenerator;
 
 final class Generate extends Command
 {
@@ -68,8 +66,6 @@ final class Generate extends Command
             $this->generateModel($module, $name);
 
             $this->generateRepository($module, $name);
-
-            $this->generateCriteria($module, $name);
 
             $this->generateDto($module, $name);
 
@@ -352,53 +348,11 @@ final class Generate extends Command
         }
     }
 
-    /**
-     * @param $module
-     * @param $name
-     */
-    protected function generateCriteria($module, $name)
-    {
-        try {
-            (new CriteriaGenerator([
-                'module' => $module,
-                'name' => $name,
-            ]))->run();
-
-            $this->info('Criteria created successfully.');
-
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Criteria has exists. {$exception->getMessage()}");
-        }
-
-        try {
-            (new CriteriaContractGenerator([
-                'module' => $module,
-                'name' => $name,
-            ]))->run();
-
-            $this->info('Criteria Contract created successfully.');
-
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Criteria Contract has exists. {$exception->getMessage()}");
-        }
-
-        try {
-            (new CriteriaTraitGenerator([
-                'module' => $module,
-                'name' => $name,
-            ]))->run();
-
-            $this->info('Criteria Trait created successfully.');
-
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Criteria Trait has exists. {$exception->getMessage()}");
-        }
-    }
 
     protected function generateDto($module, $name)
     {
         try {
-            (new DtoGenerator([
+            (new ShowDTOGenerator([
                 'name' => $name,
                 'module' => $module,
             ]))->run();

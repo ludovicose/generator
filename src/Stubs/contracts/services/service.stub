@@ -5,12 +5,12 @@ declare(strict_types=1);
 $NAMESPACE$
 
 use $MODULE$\Models\$CLASS$;
-use $MODULE$\DTO\$CLASS$DTO;
+use $MODULE$\DTO\$CLASS$ShowDTO;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface $SERVICE$
 {
-    public function getAll$CLASS$($CLASS$DTO $dto): LengthAwarePaginator;
+    public function getAll$CLASS$($CLASS$ShowDTO $dto): LengthAwarePaginator;
 
-    public function get$CLASS$ById(int $id): $CLASS$;
+    public function get$CLASS$ById(int|string $id): $CLASS$;
 }

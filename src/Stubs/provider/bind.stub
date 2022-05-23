@@ -5,8 +5,6 @@ declare(strict_types=1);
 $NAMESPACE$
 
 use $MODULE$\Contracts\Services\$CLASS$Service as $CLASS$ServiceContract;
-use $MODULE$\Contracts\Criteria\$CLASS$Criteria as $CLASS$CriteriaContract;
-use $MODULE$\Criteria\Eloquent\$CLASS$Criteria;
 use $MODULE$\Services\$CLASS$Service;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +12,5 @@ class BindServiceProvider extends ServiceProvider
 {
     public array $bindings = [
         $CLASS$ServiceContract::class => $CLASS$Service::class,
-        $CLASS$CriteriaContract::class => $CLASS$Criteria::class,
     ];
 }

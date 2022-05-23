@@ -6,17 +6,8 @@ $NAMESPACE$
 
 final class Create$CLASS$Command
 {
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Create$CLASS$Command constructor.
-     * @param string $name
-     */
-    public function __construct(string $name)
+    public function __construct(public string $name)
     {
-        $this->name = $name;
+
     }
 }
