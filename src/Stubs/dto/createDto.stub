@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+final class Create$CLASS$DTO
+{
+    public string $id;
+
+    public string $name;
+
+    public static function fromRequest(Request $request): self
+    {
+        $self = new self();
+        $self->id    = Str::uuid()->toString();
+        $self->name = $request->get('name');
+        return $self;
+    }
+
+    public function toArray(): array
+    {
+        $array = (array) $this;
+        return array_filter($array, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+    }
+}

@@ -7,6 +7,7 @@ $NAMESPACE$
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use $MODULE$\DTO\Create$CLASS$DTO;
 
 /**
  *  * @OA\Schema(
@@ -19,7 +20,7 @@ use Illuminate\Contracts\Validation\Validator;
  * )
  *
  */
-final class $CLASS$Request extends FormRequest
+final class Create$CLASS$Request extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -46,7 +47,7 @@ final class $CLASS$Request extends FormRequest
 
     public function getDTO()
     {
-        return $CLASS$DTO::fromRequest($this);
+        return Create$CLASS$DTO::fromRequest($this);
     }
 
     protected function failedValidation(Validator $validator)

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ludovicose\Generator\Generators\Requests;
+namespace Ludovicose\Generator\Generators\Dto;
 
 use Ludovicose\Generator\Generator;
 
-final class RequestGenerator extends Generator
+final class CreateDTOGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'request/request';
+    protected $stub = 'dto/createDto';
 
     /**
      * Get generator path config node.
@@ -21,7 +21,7 @@ final class RequestGenerator extends Generator
      */
     public function getPathConfigNode() :string
     {
-        return 'request';
+        return 'dto';
     }
 
     /**
@@ -31,6 +31,6 @@ final class RequestGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . $this->getName() . 'Request.php';
+        return parent::getPath() . 'Create'.$this->getName() . 'DTO.php';
     }
 }

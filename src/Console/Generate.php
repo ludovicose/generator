@@ -8,6 +8,7 @@ use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 use Ludovicose\Generator\Generators\Commands\CreateCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\RemoveCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
+use Ludovicose\Generator\Generators\Dto\CreateDTOGenerator;
 use Ludovicose\Generator\Generators\Dto\ShowDTOGenerator;
 use Ludovicose\Generator\Generators\Policy\PolicyGenerate;
 use Ludovicose\Generator\Generators\Providers\BindServiceProviderGenerator;
@@ -21,7 +22,6 @@ use Ludovicose\Generator\Generators\Providers\RepositoryServiceProviderGenerator
 use Ludovicose\Generator\Generators\Contract\RepositoryUpdateContractGenerator;
 use Ludovicose\Generator\Generators\Contract\ServiceContractGenerator;
 use Ludovicose\Generator\Generators\Controller\ControllerGenerator;
-use Ludovicose\Generator\Generators\Dto\DTOGenerator;
 use Ludovicose\Generator\Generators\Handlers\CreateHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\RemoveHandlerGenerator;
 use Ludovicose\Generator\Generators\Handlers\UpdateHandlerGenerator;
@@ -29,7 +29,7 @@ use Ludovicose\Generator\Generators\Model\ModelGenerator;
 use Ludovicose\Generator\Generators\Providers\RouterServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Queries\QueryGenerator;
 use Ludovicose\Generator\Generators\Repositories\RepositoryGenerator;
-use Ludovicose\Generator\Generators\Requests\RequestGenerator;
+use Ludovicose\Generator\Generators\Requests\CreateRequestGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestShowGenerator;
 use Ludovicose\Generator\Generators\Router\RouterGenerator;
 use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
@@ -89,7 +89,7 @@ final class Generate extends Command
     protected function generateRequest($module, $name)
     {
         try {
-            (new RequestGenerator([
+            (new CreateRequestGenerator([
                 'name' => $name,
                 'module' => $module,
             ]))->run();
@@ -357,9 +357,20 @@ final class Generate extends Command
                 'module' => $module,
             ]))->run();
 
-            $this->info('Dto created successfully.');
+            $this->info('Show Dto created successfully.');
         } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Dto has exists. {$exception->getMessage()}");
+            $this->warn("Show Dto has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new CreateDTOGenerator([
+                'name' => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Create Dto created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Create Dto has exists. {$exception->getMessage()}");
         }
     }
 

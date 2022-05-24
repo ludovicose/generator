@@ -10,7 +10,7 @@ use $MODULE$\Models\$CLASS$;
 
 final class Create$CLASS$Handler
 {
-    public function __construct(public Create$CLASS$Repository $repository)
+    public function __construct(public Create$CLASS$Repository $create$CLASS$Repository)
     {
 
     }
@@ -18,8 +18,8 @@ final class Create$CLASS$Handler
     public function handle(Create$CLASS$Command $command)
     {
         $model = new $CLASS$();
-        $model->name = $command->name;
-        $this->repository->create($model);
+        $model->name = $command->dto->name;
+        $this->create$CLASS$Repository->create($model);
 
         return $model;
     }

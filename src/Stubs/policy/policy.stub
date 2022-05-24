@@ -3,7 +3,8 @@
 $NAMESPACE$
 
 use $APPNAME$Models\User;
-use $MODULE$\Requests\$CLASS$Request;
+use $MODULE$\Requests\Create$CLASS$Request;
+use $MODULE$\Requests\Update$CLASS$Request;
 use $MODULE$\Requests\$CLASS$ShowRequest;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -26,12 +27,12 @@ class $CLASS$Policy
         return true;
     }
 
-    public function store(User $user, $CLASS$Request $request): bool
+    public function store(User $user, Create$CLASS$Request $request): bool
     {
        return true;
     }
 
-    public function update(User $user, $CLASS$Request $request): bool
+    public function update(User $user, Update$CLASS$Request $request): bool
     {
         return true;
     }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 $NAMESPACE$
 
+use $MODULE$\DTO\Create$CLASS$DTO;
+
 final class Create$CLASS$Command
 {
-    public function __construct(public string $name)
+    public function __construct(public Create$CLASS$DTO $dto)
     {
 
     }
