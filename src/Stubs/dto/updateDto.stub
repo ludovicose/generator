@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use Illuminate\Http\Request;
+
+final class Update$CLASS$DTO
+{
+    public string|int $id;
+
+    public string $name;
+
+    public static function fromRequest(Request $request): self
+    {
+        $self = new self();
+        $self->id   = $request->route('$API$');
+        $self->name = $request->get('name');
+        return $self;
+    }
+
+    public function toArray(): array
+    {
+        $array = (array) $this;
+        return array_filter($array, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+    }
+}

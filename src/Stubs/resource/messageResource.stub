@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$NAMESPACE$
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,12 +14,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
   *      ),
   * )
   */
-final class $CLASS$Resource extends JsonResource
+final class MessagesResource extends JsonResource
 {
-   public function toArray($request): array
-   {
-       return [
+    public function toArray($request): array
+    {
+        return [
             'id' => $this->id,
-       ];
-   }
+        ];
+    }
 }

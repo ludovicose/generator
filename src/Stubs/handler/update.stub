@@ -11,28 +11,16 @@ use $MODULE$\Models\$CLASS$;
 
 final class Update$CLASS$Handler
 {
-    /**
-     * @var Update$CLASS$Repository
-     */
-    private $repository;
 
-    /**
-     */
-    private $query;
-
-    /**
-     */
-    public function __construct(Update$CLASS$Repository $repository, $CLASS$Query $query)
+    public function __construct(public Update$CLASS$Repository $update$CLASS$Repository, public $CLASS$Query $query)
     {
-        $this->repository = $repository;
-        $this->query = $query;
     }
 
     public function handle(Update$CLASS$Command $command)
     {
         $model = $this->query->findById($command->id);
-        $model->name = $command->name;
-        $this->repository->update($model);
+        $model->name = $command->dto->name;
+        $this->update$CLASS$Repository->update($model);
 
         return $model;
     }

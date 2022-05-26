@@ -241,6 +241,9 @@ abstract class Generator
             case ('resource' === $class):
                 $path = config('generator.paths.resource', 'Resource');
                 break;
+            case ('baseResource' === $class):
+                $path = config('generator.paths.baseResource', 'Resource');
+                break;
             case ('router' === $class):
                 $path = config('generator.paths.router', 'Routers');
                 break;

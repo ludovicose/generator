@@ -10,6 +10,7 @@ use Ludovicose\Generator\Generators\Commands\RemoveCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
 use Ludovicose\Generator\Generators\Dto\CreateDTOGenerator;
 use Ludovicose\Generator\Generators\Dto\ShowDTOGenerator;
+use Ludovicose\Generator\Generators\Dto\UpdateDTOGenerator;
 use Ludovicose\Generator\Generators\Policy\PolicyGenerate;
 use Ludovicose\Generator\Generators\Providers\BindServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Providers\CommandServiceProviderGenerator;
@@ -31,6 +32,8 @@ use Ludovicose\Generator\Generators\Queries\QueryGenerator;
 use Ludovicose\Generator\Generators\Repositories\RepositoryGenerator;
 use Ludovicose\Generator\Generators\Requests\CreateRequestGenerator;
 use Ludovicose\Generator\Generators\Requests\RequestShowGenerator;
+use Ludovicose\Generator\Generators\Requests\UpdateRequestGenerator;
+use Ludovicose\Generator\Generators\Resource\MessageResourceGenerate;
 use Ludovicose\Generator\Generators\Router\RouterGenerator;
 use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
 use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
@@ -51,7 +54,7 @@ final class Generate extends Command
     public function fire()
     {
         $module = $this->argument('module');
-        $name = $this->argument('name');
+        $name   = $this->argument('name');
 
         if ($this->confirm('Would you like to create a Request, Controller, Service, Resource, Repository, Commands, Providers, Policy, Dto? [y|N]')) {
 
@@ -90,18 +93,29 @@ final class Generate extends Command
     {
         try {
             (new CreateRequestGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
-            $this->info('Request created successfully.');
+            $this->info('CreateRequest created successfully.');
         } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Request has exists. {$exception->getMessage()}");
+            $this->warn("CreateRequest has exists. {$exception->getMessage()}");
+        }
+
+        try {
+            (new UpdateRequestGenerator([
+                'name'   => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Update Request created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Update Request has exists. {$exception->getMessage()}");
         }
 
         try {
             (new RequestShowGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -119,7 +133,7 @@ final class Generate extends Command
     {
         try {
             (new ResourcesGenerate([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -130,7 +144,7 @@ final class Generate extends Command
 
         try {
             (new ResourceGenerate([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -138,13 +152,24 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Resource has exists. {$exception->getMessage()}");
         }
+
+        try {
+            (new MessageResourceGenerate([
+                'name'   => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('MessageResource created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("MessageResource has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateController($module, $name)
     {
         try {
             (new ControllerGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -162,7 +187,7 @@ final class Generate extends Command
     {
         try {
             (new ServiceGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -173,7 +198,7 @@ final class Generate extends Command
 
         try {
             (new ServiceContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -184,7 +209,7 @@ final class Generate extends Command
 
         try {
             (new CreateCommandGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -195,7 +220,7 @@ final class Generate extends Command
 
         try {
             (new CreateHandlerGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -206,7 +231,7 @@ final class Generate extends Command
 
         try {
             (new UpdateCommandGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -217,7 +242,7 @@ final class Generate extends Command
 
         try {
             (new UpdateHandlerGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -228,7 +253,7 @@ final class Generate extends Command
 
         try {
             (new RemoveCommandGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -239,7 +264,7 @@ final class Generate extends Command
 
         try {
             (new RemoveHandlerGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -254,7 +279,7 @@ final class Generate extends Command
     {
         try {
             (new ModelGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -272,7 +297,7 @@ final class Generate extends Command
     {
         try {
             (new RepositoryCreateContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -283,7 +308,7 @@ final class Generate extends Command
 
         try {
             (new RepositoryUpdateContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -294,7 +319,7 @@ final class Generate extends Command
 
         try {
             (new RepositoryRemoveContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -305,7 +330,7 @@ final class Generate extends Command
 
         try {
             (new QueryPaginationContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -316,7 +341,7 @@ final class Generate extends Command
 
         try {
             (new QueryContractGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -327,7 +352,7 @@ final class Generate extends Command
 
         try {
             (new RepositoryGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -338,7 +363,7 @@ final class Generate extends Command
 
         try {
             (new QueryGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -353,7 +378,7 @@ final class Generate extends Command
     {
         try {
             (new ShowDTOGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -364,7 +389,7 @@ final class Generate extends Command
 
         try {
             (new CreateDTOGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -372,13 +397,24 @@ final class Generate extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Create Dto has exists. {$exception->getMessage()}");
         }
+
+        try {
+            (new UpdateDTOGenerator([
+                'name'   => $name,
+                'module' => $module,
+            ]))->run();
+
+            $this->info('Update Dto created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Update Dto has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generateProviders($module, $name)
     {
         try {
             (new CommandServiceProviderGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -389,7 +425,7 @@ final class Generate extends Command
 
         try {
             (new RepositoryServiceProviderGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -400,7 +436,7 @@ final class Generate extends Command
 
         try {
             (new BindServiceProviderGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -412,7 +448,7 @@ final class Generate extends Command
 
         try {
             (new RouterServiceProviderGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -424,7 +460,7 @@ final class Generate extends Command
 
         try {
             (new RegisterServiceProviderGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -439,7 +475,7 @@ final class Generate extends Command
     {
         try {
             (new TestGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -453,7 +489,7 @@ final class Generate extends Command
     {
         try {
             (new RouterGenerator([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 
@@ -466,7 +502,7 @@ final class Generate extends Command
     protected function generateFactoryAndSeed($name)
     {
         $this->call('make:factory', [
-            'name' => $name . 'Factory',
+            'name'    => $name . 'Factory',
             '--model' => $name
         ]);
 
@@ -479,7 +515,7 @@ final class Generate extends Command
     {
         try {
             (new PolicyGenerate([
-                'name' => $name,
+                'name'   => $name,
                 'module' => $module,
             ]))->run();
 

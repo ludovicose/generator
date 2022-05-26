@@ -10,11 +10,13 @@ use $MODULE$\Commands\Remove$CLASS$Command;
 use $MODULE$\Commands\Update$CLASS$Command;
 use $MODULE$\Models\$CLASS$;
 use $MODULE$\Requests\Create$CLASS$Request;
+use $MODULE$\Requests\Update$CLASS$Request;
 use $MODULE$\Requests\$CLASS$ShowRequest;
 use $MODULE$\Resources\$CLASS$Resource;
 use $MODULE$\Resources\$CLASS$sResource;
 use $MODULE$\Contracts\Services\$CLASS$Service;
 use Illuminate\Contracts\Bus\Dispatcher;
+use App\Http\Resources\MessagesResource;
 
 final class $CONTROLLER$Controller extends Controller
 {
@@ -172,15 +174,15 @@ final class $CONTROLLER$Controller extends Controller
      *   }}
      * )
      */
-    public function store(Create$CLASS$Request $request): $CLASS$Resource
+    public function store(Create$CLASS$Request $request): MessagesResource
     {
         $this->authorize('store', [$CLASS$::class, $request]);
 
         $command = new Create$CLASS$Command($request->getDTO());
 
-        $result = $this->commandDispatcher->dispatch($command);
+        $this->commandDispatcher->dispatch($command);
 
-        return new $CLASS$Resource($result);
+        return new MessagesResource($request->getDTO());
     }
 
 
@@ -222,18 +224,18 @@ final class $CONTROLLER$Controller extends Controller
      *   }}
      * )
      */
-    public function update(int|string $$API$, $CLASS$Request $request): $CLASS$Resource
+    public function update(int|string $id, Update$CLASS$Request $request): MessagesResource
     {
         $this->authorize('update', [$CLASS$::class, $request]);
 
         $command = new Update$CLASS$Command(
-            $$API$,
-            $request->get('name')
+            $id,
+            $request->getDTO()
         );
 
-        $result = $this->commandDispatcher->dispatch($command);
+        $this->commandDispatcher->dispatch($command);
 
-        return new $CLASS$Resource($result);
+        return new MessagesResource($request->getDTO());
     }
 
 
