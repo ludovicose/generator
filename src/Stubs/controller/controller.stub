@@ -262,12 +262,16 @@ final class $CONTROLLER$Controller extends Controller
      *   }}
      * )
      */
-    public function destroy(string $id)
+    public function destroy(int|string $id)
     {
         $this->authorize('destroy', [$CLASS$::class, $id]);
 
         $command = new Remove$CLASS$Command($id);
 
         $this->commandDispatcher->dispatch($command);
+
+        return response()->json([
+            'message' => 'Данные успешно удалены'
+        ]);
     }
 }

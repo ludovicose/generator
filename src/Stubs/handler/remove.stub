@@ -10,22 +10,12 @@ use $MODULE$\Models\$CLASS$;
 
 final class Remove$CLASS$Handler
 {
-    /**
-     * @var Remove$CLASS$Repository
-     */
-    private $repository;
-
-    /**
-     * Remove$CLASS$Handler constructor.
-     * @param $CLASS$Repository $repository
-     */
-    public function __construct(Remove$CLASS$Repository $repository)
+    public function __construct(private Remove$CLASS$Repository $remove$CLASS$Repository)
     {
-        $this->repository = $repository;
     }
 
     public function handle(Remove$CLASS$Command $command)
     {
-        $this->repository->remove($command->id);
+        $this->remove$CLASS$Repository->remove($command->id);
     }
 }
