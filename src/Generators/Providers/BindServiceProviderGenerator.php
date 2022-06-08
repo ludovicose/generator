@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Ludovicose\Generator\Generators\Providers;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Ludovicose\Generator\Exceptions\BindServiceProviderNotFoundException;
 use Ludovicose\Generator\Generator;
 
 final class BindServiceProviderGenerator extends Generator
@@ -14,6 +17,7 @@ final class BindServiceProviderGenerator extends Generator
      */
     protected $stub = 'provider/bind';
 
+    const FILE_NAME = 'BindServiceProvider.php';
 
     /**
      * Get generator path config node.
@@ -32,6 +36,67 @@ final class BindServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "BindServiceProvider.php";
+        return parent::getPath() . self::FILE_NAME;
+    }
+
+    protected function beforeRun()
+    {
+        $this->registerSubModuleClassesInProvider();
+        $this->registerSubModuleNameSpacesInProvider();
+    }
+
+
+    protected function registerSubModuleNameSpacesInProvider()
+    {
+        $bindServiceProviderFile = $this->getPath();
+
+        if (!File::exists($bindServiceProviderFile)) {
+            return;
+        }
+
+        $bindServiceProviderContent = File::get($bindServiceProviderFile);
+
+        $searchText = 'use Illuminate\Support\ServiceProvider;';
+
+        if (!Str::contains($bindServiceProviderContent, $searchText)) {
+            throw new BindServiceProviderNotFoundException('Не найдено use ServiceProvider в файле BindServiceProvider.php');
+        }
+
+        $stub = $this->getStubByName('provider/bind_namespace');
+
+        if (Str::contains($bindServiceProviderContent, $stub)) {
+            return;
+        }
+
+        $content = Str::replace($searchText, $stub . $searchText, $bindServiceProviderContent);
+
+        File::put($bindServiceProviderFile, $content);
+    }
+
+    protected function registerSubModuleClassesInProvider()
+    {
+        $bindServiceProviderFile = $this->getPath();
+
+        if (!File::exists($bindServiceProviderFile)) {
+            return;
+        }
+
+        $bindServiceProviderContent = File::get($bindServiceProviderFile);
+
+        $searchText = 'public array $bindings = [';
+
+        if (!Str::contains($bindServiceProviderContent, $searchText)) {
+            throw new BindServiceProviderNotFoundException('Не найдено binding в файле BindServiceProvider.php');
+        }
+
+        $stub = $this->getStubByName('provider/bind_class');
+
+        if (Str::contains($bindServiceProviderContent, $stub)) {
+            return;
+        }
+
+        $content = Str::replace($searchText, $searchText . $stub, $bindServiceProviderContent);
+
+        File::put($bindServiceProviderFile, $content);
     }
 }

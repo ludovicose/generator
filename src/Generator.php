@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Ludovicose\Generator;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
 
@@ -39,7 +40,7 @@ abstract class Generator
     public function __construct(array $options = [])
     {
         $this->filesystem = new Filesystem();
-        $this->options = $options;
+        $this->options    = $options;
     }
 
     /**
@@ -47,15 +48,20 @@ abstract class Generator
      *
      * @return string
      */
-    public function getStub(): string
+    protected function getStub(): string
+    {
+        return $this->getStubByName($this->stub);
+    }
+
+    protected function getStubByName(string $name): string
     {
         $path = config('generator.stubsOverridePath', __DIR__);
 
-        if (!file_exists($path . '/Stubs/' . $this->stub . '.stub')) {
+        if (!file_exists($path . '/Stubs/' . $name . '.stub')) {
             $path = __DIR__;
         }
 
-        return (new Stub($path . '/Stubs/' . $this->stub . '.stub', $this->getReplacements()))->render();
+        return (new Stub($path . '/Stubs/' . $name . '.stub', $this->getReplacements()))->render();
     }
 
 
@@ -68,11 +74,11 @@ abstract class Generator
     {
         $rootNamespace = config('generator.rootNamespace');
         return [
-            'class' => $this->getClass(),
-            'namespace' => $this->getNamespace(),
+            'class'          => $this->getClass(),
+            'namespace'      => $this->getNamespace(),
             'root_namespace' => $this->getRootNamespace(),
-            'appname' => $this->getAppNamespace(),
-            'module' => $rootNamespace . $this->getModule()
+            'appname'        => $this->getAppNamespace(),
+            'module'         => $rootNamespace . $this->getModule()
         ];
     }
 
@@ -245,7 +251,7 @@ abstract class Generator
                 $path = config('generator.paths.baseResource', 'Resource');
                 break;
             case ('router' === $class):
-                $path = config('generator.paths.router', 'Routers');
+                $path = config('generator.paths.router', 'routes');
                 break;
             case ('command' === $class):
                 $path = config('generator.paths.command', 'Commands');
@@ -277,11 +283,12 @@ abstract class Generator
     /**
      * Run the generator.
      *
-     * @return int
      * @throws \Exception
      */
-    public function run(): int
+    public function run(): void
     {
+        $this->beforeRun();
+
         if ($this->filesystem->exists($path = $this->getPath()) && !$this->force) {
             throw new FileAlreadyExistsExceptions("File Already Exists $path");
         }
@@ -290,8 +297,11 @@ abstract class Generator
             $this->filesystem->makeDirectory($dir, 0777, true, true);
         }
 
-        return $this->filesystem->put($path, $this->sortImports($this->getStub()));
+        $this->filesystem->put($path, $this->sortImports($this->getStub()));
+
+        $this->afterRun();
     }
+
 
     /**
      * Determinte whether the given key exist in options array.
@@ -385,5 +395,14 @@ abstract class Generator
         }
 
         return $stub;
+    }
+
+    protected function afterRun()
+    {
+
+    }
+
+    protected function beforeRun()
+    {
     }
 }

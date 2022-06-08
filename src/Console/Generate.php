@@ -5,6 +5,7 @@ namespace Ludovicose\Generator\Console;
 
 use Illuminate\Console\Command;
 use Ludovicose\Generator\Exceptions\FileAlreadyExistsExceptions;
+use Ludovicose\Generator\Exceptions\RouteServiceProviderNotFoundException;
 use Ludovicose\Generator\Generators\Commands\CreateCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\RemoveCommandGenerator;
 use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
@@ -447,18 +448,6 @@ final class Generate extends Command
         }
 
         try {
-            (new RouterServiceProviderGenerator([
-                'name'   => $name,
-                'module' => $module,
-            ]))->run();
-
-            $this->info('RouterServiceProvider created successfully.');
-
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("RouterServiceProvider has exists. {$exception->getMessage()}");
-        }
-
-        try {
             (new RegisterServiceProviderGenerator([
                 'name'   => $name,
                 'module' => $module,
@@ -496,6 +485,8 @@ final class Generate extends Command
             $this->info('Router created successfully.');
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Router has exists. {$exception->getMessage()}");
+        } catch (RouteServiceProviderNotFoundException $exception) {
+            $this->warn("Прошу зарегистрировать роуты в RouteServiceProvider.php");
         }
     }
 
