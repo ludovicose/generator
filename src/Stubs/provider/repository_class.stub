@@ -1,0 +1,6 @@
+
+        $CLASS$QueryContract::class => $CLASS$Query::class,
+        Pagination$CLASS$Query::class => $CLASS$Query::class,
+        Create$CLASS$Repository::class => $CLASS$Repository::class,
+        Update$CLASS$Repository::class => $CLASS$Repository::class,
+        Remove$CLASS$Repository::class => $CLASS$Repository::class,

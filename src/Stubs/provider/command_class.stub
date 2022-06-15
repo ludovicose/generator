@@ -1,0 +1,4 @@
+
+        Create$CLASS$Command::class => Create$CLASS$Handler::class,
+        Update$CLASS$Command::class => Update$CLASS$Handler::class,
+        Remove$CLASS$Command::class => Remove$CLASS$Handler::class,

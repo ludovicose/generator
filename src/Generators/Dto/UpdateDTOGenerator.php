@@ -38,7 +38,7 @@ final class UpdateDTOGenerator extends Generator
     public function getReplacements(): array
     {
         return array_merge(parent::getReplacements(), [
-            'api' => Str::lower($this->getModule()),
+            'api' => Str::lower($this->getClass()),
         ]);
     }
 }
