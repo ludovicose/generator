@@ -62,7 +62,7 @@ final class BindServiceProviderGenerator extends Generator
             throw new BindServiceProviderNotFoundException('Не найдено use ServiceProvider в файле BindServiceProvider.php');
         }
 
-        $stub = $this->getStubByName('provider/bind_namespace');
+        $stub = $this->sortImports($this->getStubByName('provider/bind_namespace'));
 
         if (Str::contains($bindServiceProviderContent, $stub)) {
             return;

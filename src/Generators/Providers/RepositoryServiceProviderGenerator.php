@@ -62,7 +62,7 @@ final class RepositoryServiceProviderGenerator extends Generator
             throw new RepositoryServiceProviderNotFoundException('Не найдено use ServiceProvider в файле RepositoryServiceProvider.php');
         }
 
-        $stub = $this->getStubByName('provider/repository_namespace');
+        $stub = $this->sortImports($this->getStubByName('provider/repository_namespace'));
 
         if (Str::contains($repositoryServiceProviderContent, $stub)) {
             return;

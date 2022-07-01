@@ -45,7 +45,6 @@ final class CommandServiceProviderGenerator extends Generator
         $this->registerSubModuleNameSpacesInProvider();
     }
 
-
     protected function registerSubModuleNameSpacesInProvider()
     {
         $commandServiceProviderFile = $this->getPath();
@@ -62,7 +61,7 @@ final class CommandServiceProviderGenerator extends Generator
             throw new CommandServiceProviderNotFoundException('Не найдено use ServiceProvider в файле CommandBusServiceProviders.php');
         }
 
-        $stub = $this->getStubByName('provider/command_namespace');
+        $stub = $this->sortImports($this->getStubByName('provider/command_namespace'));
 
         if (Str::contains($commandServiceProviderContent, $stub)) {
             return;
