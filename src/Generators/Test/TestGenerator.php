@@ -13,7 +13,7 @@ final class TestGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'test/test';
+    protected string $stub = 'test/test';
 
     /**
      * Get root namespace.

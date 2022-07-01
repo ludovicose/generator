@@ -13,7 +13,7 @@ final class UpdateRequestGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'request/update';
+    protected string $stub = 'requests/update';
 
     /**
      * Get generator path config node.

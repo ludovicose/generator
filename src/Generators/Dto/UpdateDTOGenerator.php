@@ -14,7 +14,7 @@ final class UpdateDTOGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'dto/updateDto';
+    protected string $stub = 'dto/updateDto';
 
     /**
      * Get generator path config node.

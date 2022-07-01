@@ -13,7 +13,7 @@ final class MessageResourceGenerate extends Generator
      *
      * @var string
      */
-    protected $stub = 'resource/messageResource';
+    protected string $stub = 'resource/messageResource';
 
     /**
      * Get generator path config node.

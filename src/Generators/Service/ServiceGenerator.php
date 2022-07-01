@@ -12,7 +12,7 @@ final class ServiceGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'service/service';
+    protected string $stub = 'service/service';
 
 
     /**

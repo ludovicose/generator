@@ -13,7 +13,7 @@ final class ControllerGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'controller/controller';
+    protected string $stub = 'controller/controller';
 
 
     /**

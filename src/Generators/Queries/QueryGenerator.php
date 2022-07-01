@@ -13,7 +13,7 @@ final class QueryGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'query/query';
+    protected string $stub = 'query/query';
 
     /**
      * Get generator path config node.

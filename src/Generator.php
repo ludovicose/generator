@@ -15,21 +15,21 @@ abstract class Generator
      *
      * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * The array of options.
      *
      * @var array
      */
-    protected $options;
+    protected array $options;
 
     /**
      * The shortname of stub.
      *
      * @var string
      */
-    protected $stub;
+    protected string $stub;
 
 
     /**
@@ -55,13 +55,13 @@ abstract class Generator
 
     protected function getStubByName(string $name): string
     {
-        $path = config('generator.stubsOverridePath', __DIR__);
+        $path = config('generator.stubCustomizePath', __DIR__);
 
-        if (!file_exists($path . '/Stubs/' . $name . '.stub')) {
-            $path = __DIR__;
+        if (!file_exists($path . '/' . $name . '.stub')) {
+            $path = __DIR__ . "/Stubs";
         }
 
-        return (new Stub($path . '/Stubs/' . $name . '.stub', $this->getReplacements()))->render();
+        return (new Stub($path . '/' . $name . '.stub', $this->getReplacements()))->render();
     }
 
 
@@ -399,7 +399,6 @@ abstract class Generator
 
     protected function afterRun()
     {
-
     }
 
     protected function beforeRun()

@@ -15,7 +15,7 @@ final class BindServiceProviderGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'provider/bind';
+    protected string $stub = 'provider/bind';
 
     const FILE_NAME = 'BindServiceProvider.php';
 

@@ -13,7 +13,7 @@ final class CreateRequestGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'request/create';
+    protected string $stub = 'requests/create';
 
     /**
      * Get generator path config node.

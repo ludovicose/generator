@@ -12,7 +12,7 @@ final class RepositoryRemoveContractGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'contracts/repositories/remove';
+    protected string $stub = 'contracts/repositories/remove';
 
 
     /**

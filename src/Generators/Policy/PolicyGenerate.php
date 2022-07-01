@@ -13,7 +13,7 @@ class PolicyGenerate extends Generator
      *
      * @var string
      */
-    protected $stub = 'policy/policy';
+    protected string $stub = 'policy/policy';
 
     /**
      * Get generator path config node.

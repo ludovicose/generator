@@ -13,7 +13,7 @@ final class CreateDTOGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'dto/createDto';
+    protected string $stub = 'dto/createDto';
 
     /**
      * Get generator path config node.

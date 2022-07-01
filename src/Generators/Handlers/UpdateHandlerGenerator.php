@@ -13,7 +13,7 @@ final class UpdateHandlerGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'handler/update';
+    protected string $stub = 'handler/update';
 
     /**
      * Get generator path config node.

@@ -3,7 +3,7 @@
 return [
     'basePath'          => app()->path('Module'),
     'rootNamespace'     => 'App\\Module\\',
-    'stubsOverridePath' => app()->path(),
+    'stubCustomizePath' => app()->basePath('stubs/code/Stubs'),
     'paths'             => [
         'models'             => 'Models',
         'repositories'       => 'Repositories/Eloquent',

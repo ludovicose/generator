@@ -13,7 +13,7 @@ final class CreateHandlerGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'handler/create';
+    protected string $stub = 'handler/create';
 
     /**
      * Get generator path config node.

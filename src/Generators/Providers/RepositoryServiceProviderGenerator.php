@@ -15,7 +15,7 @@ final class RepositoryServiceProviderGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'provider/repository';
+    protected string $stub = 'provider/repository';
 
     const FILE_NAME = 'RepositoryServiceProvider.php';
 

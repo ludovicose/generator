@@ -41,7 +41,7 @@ use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
 use Ludovicose\Generator\Generators\Service\ServiceGenerator;
 use Ludovicose\Generator\Generators\Test\TestGenerator;
 
-final class Generate extends Command
+final class CodeGenerateCommand extends Command
 {
     protected $signature = 'code:generate {module} {name}';
 

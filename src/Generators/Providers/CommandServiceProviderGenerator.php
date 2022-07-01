@@ -15,7 +15,7 @@ final class CommandServiceProviderGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'provider/command';
+    protected string $stub = 'provider/command';
 
     const FILE_NAME = 'CommandBusServiceProviders.php';
 

@@ -16,7 +16,7 @@ final class RouterGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'router/router';
+    protected string $stub = 'router/router';
 
     public function getRootNamespace(): string
     {
