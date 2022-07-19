@@ -8,5 +8,5 @@ use $MODULE$\Models\$CLASS$;
 
 interface Remove$CLASS$Repository
 {
-    public function remove(int $id): void;
+    public function remove(int|string $id): void;
 }

@@ -13,7 +13,7 @@ final class ResourceGenerate extends Generator
      *
      * @var string
      */
-    protected $stub = 'resource/resource';
+    protected string $stub = 'resource/resource';
 
     /**
      * Get generator path config node.

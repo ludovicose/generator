@@ -5,27 +5,23 @@ declare(strict_types=1);
 $NAMESPACE$
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
-use $MODULE$\Contracts\Criteria\$CLASS$Criteria;
+use Illuminate\Database\Eloquent\Builder;
 use $MODULE$\Contracts\Queries\$CLASS$Query as $CLASS$QueryContract;
 use $MODULE$\Contracts\Queries\Pagination$CLASS$Query;
 use $MODULE$\Models\$CLASS$;
+use $MODULE$\DTO\$CLASS$ShowDTO;
 
 final class $CLASS$Query implements $CLASS$QueryContract, Pagination$CLASS$Query
-{
-    public function findById(int $id): $CLASS$
+                                                                          {
+    public function findById(int|string $id): $CLASS$
     {
         return $CLASS$::findOrFail($id);
     }
 
-    public function pagination($CLASS$Criteria $criteria): LengthAwarePaginator
+    public function pagination($CLASS$ShowDTO $dto): LengthAwarePaginator
     {
-        return $CLASS$::filter($criteria)
-            ->paginate($criteria->getLimit());
-    }
-
-    public function all(): Collection
-    {
-        return $CLASS$::all();
+        return $CLASS$::query()
+            ->when($dto->id, fn(Builder $query) => $query->where('id', $dto->id))
+            ->paginate($dto->limit, ['*'], 'page', $dto->page);
     }
 }

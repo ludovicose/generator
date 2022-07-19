@@ -1,0 +1,5 @@
+
+
+            Route::prefix('api')
+                ->middleware('api')
+                ->group(base_path('routes/$MODULEAPI$.php'));

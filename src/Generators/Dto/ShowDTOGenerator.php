@@ -1,28 +1,27 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Ludovicose\Generator\Generators\Providers;
+namespace Ludovicose\Generator\Generators\Dto;
 
 use Ludovicose\Generator\Generator;
 
-final class RouterServiceProviderGenerator extends Generator
+final class ShowDTOGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'provider/router';
-
+    protected string $stub = 'dto/showDto';
 
     /**
      * Get generator path config node.
-     *
      * @return string
      */
-    public function getPathConfigNode(): string
+    public function getPathConfigNode() :string
     {
-        return 'providers';
+        return 'dto';
     }
 
     /**
@@ -32,6 +31,6 @@ final class RouterServiceProviderGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "Router{$this->getName()}ServiceProvider.php";
+        return parent::getPath() . $this->getName() . 'ShowDTO.php';
     }
 }

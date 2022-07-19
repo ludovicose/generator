@@ -13,7 +13,7 @@ final class CreateCommandGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'command/create';
+    protected string $stub = 'commands/create';
 
     /**
      * Get generator path config node.

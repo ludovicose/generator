@@ -13,7 +13,7 @@ final class TestGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'test/test';
+    protected string $stub = 'test/test';
 
     /**
      * Get root namespace.
@@ -42,7 +42,7 @@ final class TestGenerator extends Generator
      */
     public function getPath(): string
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Test.php';
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getModule() . '/' . $this->getName() . 'Test.php';
     }
 
     /**
@@ -64,6 +64,7 @@ final class TestGenerator extends Generator
     {
         return array_merge(parent::getReplacements(), [
             'api' => Str::lower($this->getClass()),
+            'moduleName' => $this->getModule()
         ]);
     }
 }

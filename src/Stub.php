@@ -10,19 +10,19 @@ final class Stub
      *
      * @var null|string
      */
-    protected static $basePath = null;
+    protected static ?string $basePath = null;
     /**
      * The stub path.
      *
      * @var string
      */
-    protected $path;
+    protected string $path;
     /**
      * The replacements array.
      *
      * @var array
      */
-    protected $replaces = [];
+    protected array $replaces = [];
 
     /**
      * The contructor.
@@ -30,7 +30,7 @@ final class Stub
      * @param string $path
      * @param array  $replaces
      */
-    public function __construct($path, array $replaces = [])
+    public function __construct(string $path, array $replaces = [])
     {
         $this->path = $path;
         $this->replaces = $replaces;
@@ -39,12 +39,12 @@ final class Stub
     /**
      * Create new self instance.
      *
-     * @param  string $path
+     * @param string $path
      * @param  array  $replaces
      *
      * @return self
      */
-    public static function create($path, array $replaces = [])
+    public static function create(string $path, array $replaces = [])
     {
         return new static($path, $replaces);
     }
@@ -52,11 +52,11 @@ final class Stub
     /**
      * Set base path.
      *
-     * @param  string $path
+     * @param string $path
      *
      * @return void
      */
-    public static function setBasePath($path)
+    public static function setBasePath(string $path)
     {
         static::$basePath = $path;
     }
@@ -80,7 +80,7 @@ final class Stub
      *
      * @return array
      */
-    public function getReplaces()
+    public function getReplaces(): array
     {
         return $this->replaces;
     }
@@ -100,7 +100,7 @@ final class Stub
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->getContents();
     }
@@ -110,7 +110,7 @@ final class Stub
      *
      * @return mixed|string
      */
-    public function getContents()
+    public function getContents(): mixed
     {
         $contents = file_get_contents($this->getPath());
         foreach ($this->replaces as $search => $replace) {
@@ -125,7 +125,7 @@ final class Stub
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return static::$basePath . $this->path;
     }
@@ -137,7 +137,7 @@ final class Stub
      *
      * @return self
      */
-    public function setPath($path)
+    public function setPath(string $path): static
     {
         $this->path = $path;
 

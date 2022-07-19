@@ -6,34 +6,22 @@ $NAMESPACE$
 
 use Illuminate\Http\Request;
 
-final class $CLASS$DTO
+final class $CLASS$ShowDTO
 {
-    /**
-     * @var int
-     */
-    public $limit;
+    public ?int $id;
 
-    /**
-     * @var string|null
-     */
-    public $sort;
+    public int $limit;
 
-    /**
-     * @var string|null
-     */
-    public $name;
+    public ?string $sort;
 
-    /**
-     * @var int
-     */
-    public $page;
+    public ?string $name;
 
-    /**
-     * @param Request $request
-     */
+    public int $page;
+
     public static function fromRequest(Request $request): self
     {
         $self = new self();
+        $self->id    = $request->has('id') ? (int)$request->get('id') : null;
         $self->limit = (int)$request->get('limit', 20);
         $self->sort = $request->get('sort');
         $self->page = (int)$request->get('page', 1);

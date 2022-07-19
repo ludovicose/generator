@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\$MODULENAME$;
 
 use $MODULE$\Models\$CLASS$;
 use App\Models\User;
@@ -28,9 +28,9 @@ class $CLASS$Test extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
+                'data'  => [
                     [
-                        'name',
+                        'id',
                     ]
                 ],
                 'links' => [
@@ -39,7 +39,7 @@ class $CLASS$Test extends TestCase
                     'prev',
                     'next',
                 ],
-                'meta' => [
+                'meta'  => [
                     'current_page',
                     'from',
                     'last_page',
@@ -47,7 +47,6 @@ class $CLASS$Test extends TestCase
                 ]
             ]);
     }
-
 
     public function testGet$CLASS$ById()
     {
@@ -57,9 +56,9 @@ class $CLASS$Test extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
+                'data'  => [
                     [
-                        'name',
+                        'id',
                     ]
                 ],
                 'links' => [
@@ -68,7 +67,7 @@ class $CLASS$Test extends TestCase
                     'prev',
                     'next',
                 ],
-                'meta' => [
+                'meta'  => [
                     'current_page',
                     'from',
                     'last_page',
@@ -80,8 +79,11 @@ class $CLASS$Test extends TestCase
 
     public function testCreate$CLASS$()
     {
+        /** @var $CLASS$  $model */
+        $model = $CLASS$::factory()->make();
+
         $data = [
-            'name' => $this->faker->name,
+            'name' => $model->name,
         ];
 
         $response = $this->postJson(
@@ -89,12 +91,16 @@ class $CLASS$Test extends TestCase
             $data
         );
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'name',
+                    'id',
                 ],
             ]);
+
+         $this->assertDatabaseHas($model->getTable(), [
+             'name' => $model->name
+         ]);
     }
 
     public function testUpdate$CLASS$()
@@ -113,9 +119,14 @@ class $CLASS$Test extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'name',
+                    'id',
                 ],
             ]);
+
+         $this->assertDatabaseHas($model->getTable(), [
+             'id'   => $model->id,
+             'name' => $data['name']
+         ]);
     }
 
     public function testDelete$CLASS$()
@@ -126,6 +137,9 @@ class $CLASS$Test extends TestCase
             route('$API$.destroy', ['$API$' => $model->id]),
         );
 
-        $response->assertStatus(200);
+       $response->assertStatus(200)
+           ->assertJson([
+               'message' => "Данные успешно удалены"
+           ]);
     }
 }

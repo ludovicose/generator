@@ -14,7 +14,7 @@ class ModelGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'model/model';
+    protected string $stub = 'model/model';
 
 
     /**

@@ -13,9 +13,9 @@ use $MODULE$\Handlers\Remove$CLASS$Handler;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 
-class CommandBus$CLASS$ServiceProviders extends ServiceProvider
+class CommandBusServiceProviders extends ServiceProvider
 {
-    private $maps = [
+    private array $maps = [
         Create$CLASS$Command::class => Create$CLASS$Handler::class,
         Update$CLASS$Command::class => Update$CLASS$Handler::class,
         Remove$CLASS$Command::class => Remove$CLASS$Handler::class,

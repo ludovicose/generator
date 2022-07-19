@@ -1,0 +1,2 @@
+use $MODULE$\Contracts\Services\$CLASS$Service as $CLASS$ServiceContract;
+use $MODULE$\Services\$CLASS$Service;

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Ludovicose\Generator\Generators\Traits\Criteria;
+namespace Ludovicose\Generator\Generators\Requests;
 
 use Ludovicose\Generator\Generator;
 
-final class CriteriaTraitGenerator extends Generator
+final class UpdateRequestGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'traits/criteria/criteria';
+    protected string $stub = 'requests/update';
 
     /**
      * Get generator path config node.
@@ -21,7 +21,7 @@ final class CriteriaTraitGenerator extends Generator
      */
     public function getPathConfigNode() :string
     {
-        return 'criteriaTrait';
+        return 'request';
     }
 
     /**
@@ -31,6 +31,6 @@ final class CriteriaTraitGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . $this->getName() . 'CriteriaEloquent.php';
+        return parent::getPath() . 'Update'.$this->getName() . 'Request.php';
     }
 }

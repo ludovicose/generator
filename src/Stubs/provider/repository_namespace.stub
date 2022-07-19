@@ -1,0 +1,7 @@
+use $MODULE$\Contracts\Queries\$CLASS$Query as $CLASS$QueryContract;
+use $MODULE$\Contracts\Queries\Pagination$CLASS$Query;
+use $MODULE$\Queries\Eloquent\$CLASS$Query;
+use $MODULE$\Contracts\Repositories\Create$CLASS$Repository;
+use $MODULE$\Contracts\Repositories\Remove$CLASS$Repository;
+use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
+use $MODULE$\Repositories\Eloquent\$CLASS$Repository;

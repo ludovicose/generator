@@ -1,28 +1,27 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Ludovicose\Generator\Generators\Contract;
+namespace Ludovicose\Generator\Generators\Requests;
 
 use Ludovicose\Generator\Generator;
 
-final class CriteriaContractGenerator extends Generator
+final class CreateRequestGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'contracts/criteria/criteria';
-
+    protected string $stub = 'requests/create';
 
     /**
      * Get generator path config node.
-     *
      * @return string
      */
-    public function getPathConfigNode(): string
+    public function getPathConfigNode() :string
     {
-        return 'criteriaContract';
+        return 'request';
     }
 
     /**
@@ -32,6 +31,6 @@ final class CriteriaContractGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . "{$this->getName()}Criteria.php";
+        return parent::getPath() . 'Create'.$this->getName() . 'Request.php';
     }
 }

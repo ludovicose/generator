@@ -13,7 +13,7 @@ final class RepositoryGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'repository/repository';
+    protected string $stub = 'repository/repository';
 
     /**
      * Get generator path config node.

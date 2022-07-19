@@ -12,7 +12,7 @@ final class QueryPaginationContractGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'contracts/queries/pagination';
+    protected string $stub = 'contracts/queries/pagination';
 
 
     /**

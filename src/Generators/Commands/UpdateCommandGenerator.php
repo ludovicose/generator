@@ -13,7 +13,7 @@ final class UpdateCommandGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'command/update';
+    protected string $stub = 'commands/update';
 
     /**
      * Get generator path config node.

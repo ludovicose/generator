@@ -12,7 +12,7 @@ final class QueryContractGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'contracts/queries/query';
+    protected string $stub = 'contracts/queries/query';
 
 
     /**

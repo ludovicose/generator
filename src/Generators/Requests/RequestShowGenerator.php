@@ -13,7 +13,7 @@ final class RequestShowGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'request/show';
+    protected string $stub = 'requests/show';
 
     /**
      * Get generator path config node.

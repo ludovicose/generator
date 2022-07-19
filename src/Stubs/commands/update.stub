@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+use $MODULE$\DTO\Update$CLASS$DTO;
+
+final class Update$CLASS$Command
+{
+    public function __construct(public string|int $id, public Update$CLASS$DTO $dto)
+    {
+
+    }
+}

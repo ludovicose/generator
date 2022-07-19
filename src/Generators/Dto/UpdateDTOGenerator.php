@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace Ludovicose\Generator\Generators\Dto;
 
+use Illuminate\Support\Str;
 use Ludovicose\Generator\Generator;
 
-final class DTOGenerator extends Generator
+final class UpdateDTOGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'dto/dto';
+    protected string $stub = 'dto/updateDto';
 
     /**
      * Get generator path config node.
      * @return string
      */
-    public function getPathConfigNode() :string
+    public function getPathConfigNode(): string
     {
         return 'dto';
     }
@@ -31,6 +32,13 @@ final class DTOGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . $this->getName() . 'DTO.php';
+        return parent::getPath() . 'Update' . $this->getName() . 'DTO.php';
+    }
+
+    public function getReplacements(): array
+    {
+        return array_merge(parent::getReplacements(), [
+            'api' => Str::lower($this->getClass()),
+        ]);
     }
 }

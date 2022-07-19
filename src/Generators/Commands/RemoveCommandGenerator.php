@@ -13,7 +13,7 @@ final class RemoveCommandGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'command/remove';
+    protected string $stub = 'commands/remove';
 
     /**
      * Get generator path config node.

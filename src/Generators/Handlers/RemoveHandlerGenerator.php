@@ -13,7 +13,7 @@ final class RemoveHandlerGenerator extends Generator
      *
      * @var string
      */
-    protected $stub = 'handler/remove';
+    protected string $stub = 'handler/remove';
 
     /**
      * Get generator path config node.

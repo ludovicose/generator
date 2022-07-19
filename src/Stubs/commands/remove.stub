@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+$NAMESPACE$
+
+final class Remove$CLASS$Command
+{
+    public function __construct(public string|int $id)
+    {
+
+    }
+}
