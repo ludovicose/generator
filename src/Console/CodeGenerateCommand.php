@@ -53,16 +53,18 @@ final class CodeGenerateCommand extends Command
     {
         if ($this->option('fields')) {
             while (true) {
+                $this->info('Enter done to exit');
+
                 $var = $this->ask("Enter variable name");
 
-                if ($var === 'exit') {
+                if ($var === 'done') {
                     break;
                 }
 
                 $type = $this->choice("Enter type name", [
                     'int',
                     'string',
-                    'boolean',
+                    'bool',
                 ]);
 
                 $this->fields[] = [$type, $var];
@@ -80,6 +82,8 @@ final class CodeGenerateCommand extends Command
         if ($this->confirm('Would you like to create a Request, Controller, Service, Resource, Repository, Commands, Providers, Policy, Dto? [y|N]')) {
 
             $this->generateRequest($module, $name);
+
+            $this->generateDto($module, $name);
             exit();
             $this->generateController($module, $name);
 
@@ -90,8 +94,6 @@ final class CodeGenerateCommand extends Command
             $this->generateModel($module, $name);
 
             $this->generateRepository($module, $name);
-
-            $this->generateDto($module, $name);
 
             $this->generateProviders($module, $name);
 

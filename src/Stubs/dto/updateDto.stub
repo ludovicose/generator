@@ -9,14 +9,13 @@ use Illuminate\Http\Request;
 final class Update$CLASS$DTO
 {
     public string|int $id;
-
-    public string $name;
+$TEMPLATEFIELD$
 
     public static function fromRequest(Request $request): self
     {
         $self = new self();
         $self->id   = $request->route('$API$');
-        $self->name = $request->get('name');
+$TEMPLATEFIELDINIT$
         return $self;
     }
 

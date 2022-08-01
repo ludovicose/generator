@@ -10,14 +10,13 @@ use Illuminate\Support\Str;
 final class Create$CLASS$DTO
 {
     public string $id;
-
-    public string $name;
+$TEMPLATEFIELD$
 
     public static function fromRequest(Request $request): self
     {
         $self = new self();
         $self->id    = Str::uuid()->toString();
-        $self->name = $request->get('name');
+$TEMPLATEFIELDINIT$
         return $self;
     }
 

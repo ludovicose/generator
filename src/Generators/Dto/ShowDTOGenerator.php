@@ -33,4 +33,35 @@ final class ShowDTOGenerator extends Generator
     {
         return parent::getPath() . $this->getName() . 'ShowDTO.php';
     }
+
+
+    public function getReplacements(): array
+    {
+        return array_merge(parent::getReplacements(), [
+            'templateField'        => $this->getFieldsTemplate(),
+            'templateFieldInit' => $this->getInitFieldsTemplate(),
+        ]);
+    }
+
+    protected function getFieldsTemplate(): string
+    {
+        $rules = '';
+
+        foreach ($this->fields as $field) {
+            $rules .= "\tpublic ?{$field[0]} \${$field[1]};\n";
+        }
+
+        return $rules;
+    }
+
+    protected function getInitFieldsTemplate(): string
+    {
+        $rules = '';
+
+        foreach ($this->fields as $field) {
+            $rules .= "\t\t\$self->{$field[1]} = \$request->get('{$field[1]}');\n";
+        }
+
+        return $rules;
+    }
 }
