@@ -19,7 +19,7 @@ final class UpdateRequestGenerator extends Generator
      * Get generator path config node.
      * @return string
      */
-    public function getPathConfigNode() :string
+    public function getPathConfigNode(): string
     {
         return 'request';
     }
@@ -31,6 +31,51 @@ final class UpdateRequestGenerator extends Generator
      */
     public function getPath(): string
     {
-        return parent::getPath() . 'Update'.$this->getName() . 'Request.php';
+        return parent::getPath() . 'Update' . $this->getName() . 'Request.php';
+    }
+
+    public function getReplacements(): array
+    {
+
+        return array_merge(parent::getReplacements(), [
+            'template' => $this->getFieldsTemplate(),
+            'commentTemplate' => $this->getFieldsCommentTemplate(),
+        ]);
+    }
+
+    protected function getFieldsTemplate(): string
+    {
+        $rules = '';
+
+        foreach ($this->fields as $field) {
+            $rules .= "\t\t\t'{$field[1]}' => 'required|{$field[0]}',\n";
+        }
+
+        return $rules;
+    }
+
+    protected function getFieldsCommentTemplate(): string
+    {
+        $rules = '';
+
+        if (empty($this->fields)) {
+            return '
+ *     @OA\Property(
+ *         property="",
+ *         type="",
+ *         description=""
+ *     ),';
+        }
+
+        foreach ($this->fields as $field) {
+            $rules .= '
+ *     @OA\Property(
+ *         property="' . $field[1] . '",
+ *         type="' . $field[0] . '",
+ *         description=""
+ *     ),';
+        }
+
+        return $rules;
     }
 }

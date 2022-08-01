@@ -43,12 +43,32 @@ use Ludovicose\Generator\Generators\Test\TestGenerator;
 
 final class CodeGenerateCommand extends Command
 {
-    protected $signature = 'code:generate {module} {name}';
+    protected $signature = 'code:generate {module} {name} {--F|fields}';
 
     protected $description = 'Code generate';
 
+    protected array $fields = [];
+
     public function handle()
     {
+        if ($this->option('fields')) {
+            while (true) {
+                $var = $this->ask("Enter variable name");
+
+                if ($var === 'exit') {
+                    break;
+                }
+
+                $type = $this->choice("Enter type name", [
+                    'int',
+                    'string',
+                    'boolean',
+                ]);
+
+                $this->fields[] = [$type, $var];
+            }
+        }
+
         $this->laravel->call([$this, 'fire'], func_get_args());
     }
 
@@ -60,7 +80,7 @@ final class CodeGenerateCommand extends Command
         if ($this->confirm('Would you like to create a Request, Controller, Service, Resource, Repository, Commands, Providers, Policy, Dto? [y|N]')) {
 
             $this->generateRequest($module, $name);
-
+            exit();
             $this->generateController($module, $name);
 
             $this->generateService($module, $name);
@@ -96,6 +116,7 @@ final class CodeGenerateCommand extends Command
             (new CreateRequestGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('CreateRequest created successfully.');
@@ -107,6 +128,7 @@ final class CodeGenerateCommand extends Command
             (new UpdateRequestGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Update Request created successfully.');
@@ -118,6 +140,7 @@ final class CodeGenerateCommand extends Command
             (new RequestShowGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Show Request created successfully.');
@@ -136,6 +159,7 @@ final class CodeGenerateCommand extends Command
             (new ResourcesGenerate([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Resources created successfully.');
@@ -147,6 +171,7 @@ final class CodeGenerateCommand extends Command
             (new ResourceGenerate([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Resource created successfully.');
@@ -158,6 +183,7 @@ final class CodeGenerateCommand extends Command
             (new MessageResourceGenerate([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('MessageResource created successfully.');
@@ -172,6 +198,7 @@ final class CodeGenerateCommand extends Command
             (new ControllerGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Controller created successfully.');
@@ -190,6 +217,7 @@ final class CodeGenerateCommand extends Command
             (new ServiceGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Services created successfully.');
@@ -201,6 +229,7 @@ final class CodeGenerateCommand extends Command
             (new ServiceContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Services Contract created successfully.');
@@ -212,6 +241,7 @@ final class CodeGenerateCommand extends Command
             (new CreateCommandGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Create Command created successfully.');
@@ -223,6 +253,7 @@ final class CodeGenerateCommand extends Command
             (new CreateHandlerGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Create Handler created successfully.');
@@ -234,6 +265,7 @@ final class CodeGenerateCommand extends Command
             (new UpdateCommandGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Update Command created successfully.');
@@ -245,6 +277,7 @@ final class CodeGenerateCommand extends Command
             (new UpdateHandlerGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Update Handler created successfully.');
@@ -256,6 +289,7 @@ final class CodeGenerateCommand extends Command
             (new RemoveCommandGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Remove Command created successfully.');
@@ -267,6 +301,7 @@ final class CodeGenerateCommand extends Command
             (new RemoveHandlerGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Remove Handler created successfully.');
@@ -282,6 +317,7 @@ final class CodeGenerateCommand extends Command
             (new ModelGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Remove Model created successfully.');
@@ -300,6 +336,7 @@ final class CodeGenerateCommand extends Command
             (new RepositoryCreateContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Create Repository Contract created successfully.');
@@ -311,6 +348,7 @@ final class CodeGenerateCommand extends Command
             (new RepositoryUpdateContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Update Repository Contract created successfully.');
@@ -322,6 +360,7 @@ final class CodeGenerateCommand extends Command
             (new RepositoryRemoveContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Remove Repository Contract created successfully.');
@@ -333,6 +372,7 @@ final class CodeGenerateCommand extends Command
             (new QueryPaginationContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Query Pagination Contract created successfully.');
@@ -344,6 +384,7 @@ final class CodeGenerateCommand extends Command
             (new QueryContractGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Query Contract created successfully.');
@@ -355,6 +396,7 @@ final class CodeGenerateCommand extends Command
             (new RepositoryGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Repository created successfully.');
@@ -366,6 +408,7 @@ final class CodeGenerateCommand extends Command
             (new QueryGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Query created successfully.');
@@ -381,6 +424,7 @@ final class CodeGenerateCommand extends Command
             (new ShowDTOGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Show Dto created successfully.');
@@ -392,6 +436,7 @@ final class CodeGenerateCommand extends Command
             (new CreateDTOGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Create Dto created successfully.');
@@ -403,6 +448,7 @@ final class CodeGenerateCommand extends Command
             (new UpdateDTOGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Update Dto created successfully.');
@@ -417,6 +463,7 @@ final class CodeGenerateCommand extends Command
             (new CommandServiceProviderGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('CommandServiceProvider created successfully.');
@@ -428,6 +475,7 @@ final class CodeGenerateCommand extends Command
             (new RepositoryServiceProviderGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('RepositoryServiceProviders created successfully.');
@@ -439,6 +487,7 @@ final class CodeGenerateCommand extends Command
             (new BindServiceProviderGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('BindServiceProvider created successfully.');
@@ -451,6 +500,7 @@ final class CodeGenerateCommand extends Command
             (new RegisterServiceProviderGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('RegisterServiceProviderGenerator created successfully.');
@@ -466,6 +516,7 @@ final class CodeGenerateCommand extends Command
             (new TestGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Test created successfully.');
@@ -480,6 +531,7 @@ final class CodeGenerateCommand extends Command
             (new RouterGenerator([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Router created successfully.');
@@ -508,6 +560,7 @@ final class CodeGenerateCommand extends Command
             (new PolicyGenerate([
                 'name'   => $name,
                 'module' => $module,
+                'fields' => $this->fields
             ]))->run();
 
             $this->info('Policy created successfully.');

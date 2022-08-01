@@ -12,31 +12,22 @@ use $MODULE$\DTO\Create$CLASS$DTO;
 /**
  *  * @OA\Schema(
  *     required={"name"},
- *     @OA\Property(
- *         property="name",
- *         type="string",
- *         description="Название"
- *     )
+ *     $COMMENTTEMPLATE$
  * )
  *
  */
 final class Create$CLASS$Request extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+
     public function authorize()
     {
         return true;
     }
 
-
     public function rules()
     {
         return [
-            'name' => 'required|string',
+$TEMPLATE$
         ];
     }
 
