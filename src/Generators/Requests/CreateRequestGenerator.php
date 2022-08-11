@@ -36,7 +36,6 @@ final class CreateRequestGenerator extends Generator
 
     public function getReplacements(): array
     {
-
         return array_merge(parent::getReplacements(), [
             'template'        => $this->getFieldsTemplate(),
             'commentTemplate' => $this->getFieldsCommentTemplate(),

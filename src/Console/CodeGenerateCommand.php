@@ -84,8 +84,9 @@ final class CodeGenerateCommand extends Command
             $this->generateRequest($module, $name);
 
             $this->generateDto($module, $name);
-            exit();
+
             $this->generateController($module, $name);
+            exit();
 
             $this->generateService($module, $name);
 
