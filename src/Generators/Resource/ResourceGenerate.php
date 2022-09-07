@@ -33,4 +33,49 @@ final class ResourceGenerate extends Generator
     {
         return parent::getPath() . $this->getName() . 'Resource.php';
     }
+
+    public function getReplacements(): array
+    {
+        return array_merge(parent::getReplacements(), [
+            'template'        => $this->getFieldsTemplate(),
+            'commentTemplate' => $this->getFieldsCommentTemplate(),
+        ]);
+    }
+
+
+    protected function getFieldsTemplate(): string
+    {
+        $resource = '';
+
+        foreach ($this->fields as $field) {
+            $resource .= "\t\t\t'{$field[1]}' => \$this->{$field[1]},\n";
+        }
+
+        return $resource;
+    }
+
+    protected function getFieldsCommentTemplate(): string
+    {
+        $rules = '';
+
+        if (empty($this->fields)) {
+            return '
+ *     @OA\Property(
+ *         property="",
+ *         type="",
+ *         description=""
+ *     ),';
+        }
+
+        foreach ($this->fields as $field) {
+            $rules .= '
+ *     @OA\Property(
+ *         property="' . $field[1] . '",
+ *         type="' . $field[0] . '",
+ *         description=""
+ *     ),';
+        }
+
+        return $rules;
+    }
 }

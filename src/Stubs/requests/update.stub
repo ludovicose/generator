@@ -11,7 +11,7 @@ use $MODULE$\DTO\Update$CLASS$DTO;
 
 /**
  *  * @OA\Schema(
- *     required={"name"},
+ *     required={""},
  *     $COMMENTTEMPLATE$
  * )
  *

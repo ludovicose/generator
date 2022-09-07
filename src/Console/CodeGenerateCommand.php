@@ -86,11 +86,11 @@ final class CodeGenerateCommand extends Command
             $this->generateDto($module, $name);
 
             $this->generateController($module, $name);
-            exit();
 
             $this->generateService($module, $name);
 
             $this->generateResource($module, $name);
+            exit();
 
             $this->generateModel($module, $name);
 
