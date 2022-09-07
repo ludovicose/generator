@@ -12,6 +12,7 @@ use Ludovicose\Generator\Generators\Commands\UpdateCommandGenerator;
 use Ludovicose\Generator\Generators\Dto\CreateDTOGenerator;
 use Ludovicose\Generator\Generators\Dto\ShowDTOGenerator;
 use Ludovicose\Generator\Generators\Dto\UpdateDTOGenerator;
+use Ludovicose\Generator\Generators\Factory\FactoryGenerator;
 use Ludovicose\Generator\Generators\Policy\PolicyGenerate;
 use Ludovicose\Generator\Generators\Providers\BindServiceProviderGenerator;
 use Ludovicose\Generator\Generators\Providers\CommandServiceProviderGenerator;
@@ -104,7 +105,7 @@ final class CodeGenerateCommand extends Command
 
         if ($this->confirm('Would you like to create a Test, Factory, Seed? [y|N]')) {
             $this->generateTest($module, $name);
-            $this->generateFactoryAndSeed($name);
+            $this->generateFactory($module, $name);
         }
     }
 
@@ -544,16 +545,19 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateFactoryAndSeed($name)
+    protected function generateFactory($module, $name)
     {
-        $this->call('make:factory', [
-            'name'    => $name . 'Factory',
-            '--model' => $name
-        ]);
+        try {
+            (new FactoryGenerator([
+                'name'   => $name,
+                'module' => $module,
+                'fields' => $this->fields
+            ]))->run();
 
-        $this->call('make:seeder', [
-            'name' => $name . 'Seeder'
-        ]);
+            $this->info('Factory created successfully.');
+        } catch (FileAlreadyExistsExceptions $exception) {
+            $this->warn("Factory has exists. {$exception->getMessage()}");
+        }
     }
 
     protected function generatePolicy($module, $name)

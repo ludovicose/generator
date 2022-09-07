@@ -11,6 +11,7 @@ return [
         'controllers'        => 'Controllers/Api',
         'services'           => 'Services',
         'tests'              => 'tests/Feature',
+        'factories'          => 'database/factories',
         'dto'                => 'DTO',
         'request'            => 'Requests',
         'policy'             => 'Policies',

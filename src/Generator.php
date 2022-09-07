@@ -245,6 +245,9 @@ abstract class Generator
             case ('tests' === $class):
                 $path = config('generator.paths.tests', 'tests');
                 break;
+            case ('factories' === $class):
+                $path = config('generator.paths.factories', 'factories');
+                break;
             case ('dto' === $class):
                 $path = config('generator.paths.dto', 'dto');
                 break;
