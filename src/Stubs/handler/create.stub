@@ -17,7 +17,7 @@ final class Create$CLASS$Handler
     public function handle(Create$CLASS$Command $command)
     {
         $model = new $CLASS$();
-        $model->name = $command->dto->name;
+$TEMPLATE$
         $this->create$CLASS$Repository->create($model);
 
         return $model;

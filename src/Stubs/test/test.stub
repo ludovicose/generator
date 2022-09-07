@@ -94,7 +94,7 @@ $TEMPLATEDATA$
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-$TEMPLATE$
+                    'id',
                 ],
             ]);
 
@@ -120,7 +120,7 @@ $TEMPLATEDATA$
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-$TEMPLATE$
+                    'id',
                 ],
             ]);
 
