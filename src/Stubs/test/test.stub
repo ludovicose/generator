@@ -30,7 +30,7 @@ class $CLASS$Test extends TestCase
             ->assertJsonStructure([
                 'data'  => [
                     [
-                        'id',
+$TEMPLATE$
                     ]
                 ],
                 'links' => [
@@ -58,7 +58,7 @@ class $CLASS$Test extends TestCase
             ->assertJsonStructure([
                 'data'  => [
                     [
-                        'id',
+$TEMPLATE$
                     ]
                 ],
                 'links' => [
@@ -83,7 +83,7 @@ class $CLASS$Test extends TestCase
         $model = $CLASS$::factory()->make();
 
         $data = [
-            'name' => $model->name,
+$TEMPLATEDATA$
         ];
 
         $response = $this->postJson(
@@ -94,38 +94,39 @@ class $CLASS$Test extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'id',
+$TEMPLATE$
                 ],
             ]);
 
          $this->assertDatabaseHas($model->getTable(), [
-             'name' => $model->name
+$TEMPLATEDATA$
          ]);
     }
 
     public function testUpdate$CLASS$()
     {
-        $model = $CLASS$::factory()->create();
+        $id = $CLASS$::factory()->create()->id;
+        $model = $CLASS$::factory()->make();
 
         $data = [
-            'name' => $this->faker->name,
+$TEMPLATEDATA$
         ];
 
         $response = $this->putJson(
-            route('$API$.update', ['$API$' => $model->id]),
+            route('$API$.update', ['$API$' => $id]),
             $data
         );
 
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'id',
+$TEMPLATE$
                 ],
             ]);
 
          $this->assertDatabaseHas($model->getTable(), [
-             'id'   => $model->id,
-             'name' => $data['name']
+             'id'   => $id,
+$TEMPLATEDATA$
          ]);
     }
 

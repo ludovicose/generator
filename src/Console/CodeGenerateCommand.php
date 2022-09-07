@@ -90,7 +90,6 @@ final class CodeGenerateCommand extends Command
             $this->generateService($module, $name);
 
             $this->generateResource($module, $name);
-            exit();
 
             $this->generateModel($module, $name);
 

@@ -63,8 +63,32 @@ final class TestGenerator extends Generator
     public function getReplacements(): array
     {
         return array_merge(parent::getReplacements(), [
-            'api' => Str::lower($this->getClass()),
-            'moduleName' => $this->getModule()
+            'api'          => Str::lower($this->getClass()),
+            'moduleName'   => $this->getModule(),
+            'template'     => $this->getFieldsTemplate(),
+            'templateData' => $this->getDataTemplate(),
         ]);
+    }
+
+    protected function getFieldsTemplate(): string
+    {
+        $result = '';
+
+        foreach ($this->fields as $field) {
+            $result .= "\t\t\t\t\t\t'{$field[1]}',\n";
+        }
+
+        return $result;
+    }
+
+    protected function getDataTemplate(): string
+    {
+        $result = '';
+
+        foreach ($this->fields as $field) {
+            $result .= "\t\t\t'{$field[1]}' => \$model->{$field[1]},\n";
+        }
+
+        return $result;
     }
 }
