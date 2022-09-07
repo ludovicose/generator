@@ -14,9 +14,8 @@ final class $CLASS$ShowDTO
 
     public ?string $sort;
 
-    public ?string $name;
-
     public int $page;
+$TEMPLATEFIELD$
 
     public static function fromRequest(Request $request): self
     {
@@ -25,7 +24,7 @@ final class $CLASS$ShowDTO
         $self->limit = (int)$request->get('limit', 20);
         $self->sort = $request->get('sort');
         $self->page = (int)$request->get('page', 1);
-        $self->name = $request->get('name');
+$TEMPLATEFIELDINIT$
         return $self;
     }
 

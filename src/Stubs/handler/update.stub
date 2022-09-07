@@ -19,7 +19,7 @@ final class Update$CLASS$Handler
     public function handle(Update$CLASS$Command $command)
     {
         $model = $this->query->findById($command->id);
-        $model->name = $command->dto->name;
+$TEMPLATE$
         $this->update$CLASS$Repository->update($model);
 
         return $model;

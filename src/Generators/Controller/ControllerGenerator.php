@@ -55,12 +55,46 @@ final class ControllerGenerator extends Generator
     public function getReplacements(): array
     {
         return array_merge(parent::getReplacements(), [
-            'controller' => $this->getControllerName(),
-            'plural' => $this->getPluralName(),
-            'singular' => $this->getSingularName(),
-            'appname' => $this->getRootNamespace(),
-            'api' => Str::lower($this->getModule()),
-            'tag' => $this->getModule(),
+            'controller'      => $this->getControllerName(),
+            'plural'          => $this->getPluralName(),
+            'singular'        => $this->getSingularName(),
+            'appname'         => $this->getRootNamespace(),
+            'api'             => Str::lower($this->getModule()),
+            'tag'             => $this->getModule(),
+            'commentTemplate' => $this->getFieldsCommentTemplate(),
         ]);
+    }
+
+    protected function getFieldsCommentTemplate(): string
+    {
+        $rules = '';
+
+        if (empty($this->fields)) {
+            return '
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Название",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *    ),';
+        }
+
+        foreach ($this->fields as $field) {
+            $rules .= '
+     *     @OA\Parameter(
+     *         name="'. $field[1].'",
+     *         in="query",
+     *         description="",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="'. $field[0].'",
+     *         )
+     *    ),';
+        }
+
+        return $rules;
     }
 }

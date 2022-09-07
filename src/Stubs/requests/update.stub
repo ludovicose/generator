@@ -11,12 +11,8 @@ use $MODULE$\DTO\Update$CLASS$DTO;
 
 /**
  *  * @OA\Schema(
- *     required={"name"},
- *     @OA\Property(
- *         property="name",
- *         type="string",
- *         description="Название"
- *     )
+ *     required={""},
+ *     $COMMENTTEMPLATE$
  * )
  *
  */
@@ -36,7 +32,7 @@ final class Update$CLASS$Request extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+$TEMPLATE$
         ];
     }
 

@@ -56,15 +56,9 @@ final class $CONTROLLER$Controller extends Controller
      *             type="integer",
      *         )
      *    ),
-     *     @OA\Parameter(
-     *         name="name",
-     *         in="query",
-     *         description="Фильтрация по названию",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="string",
-     *         )
-     *    ),
+     *
+     *    $COMMENTTEMPLATE$
+     *
      *     @OA\Parameter(
      *         name="sort",
      *         in="query",

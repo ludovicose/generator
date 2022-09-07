@@ -39,6 +39,30 @@ final class UpdateDTOGenerator extends Generator
     {
         return array_merge(parent::getReplacements(), [
             'api' => Str::lower($this->getClass()),
+            'templateField'        => $this->getFieldsTemplate(),
+            'templateFieldInit' => $this->getInitFieldsTemplate(),
         ]);
+    }
+
+    protected function getFieldsTemplate(): string
+    {
+        $rules = '';
+
+        foreach ($this->fields as $field) {
+            $rules .= "\tpublic {$field[0]} \${$field[1]};\n";
+        }
+
+        return $rules;
+    }
+
+    protected function getInitFieldsTemplate(): string
+    {
+        $rules = '';
+
+        foreach ($this->fields as $field) {
+            $rules .= "\t\t\$self->{$field[1]} = \$request->get('{$field[1]}');\n";
+        }
+
+        return $rules;
     }
 }

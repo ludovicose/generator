@@ -31,6 +31,8 @@ abstract class Generator
      */
     protected string $stub;
 
+    protected array $fields = [];
+
 
     /**
      * Create new instance of this class.
@@ -41,6 +43,7 @@ abstract class Generator
     {
         $this->filesystem = new Filesystem();
         $this->options    = $options;
+        $this->fields     = $options['fields'] ?? [];
     }
 
     /**
@@ -55,13 +58,20 @@ abstract class Generator
 
     protected function getStubByName(string $name): string
     {
+        $path = $this->getStubPath($name);
+
+        return (new Stub($path, $this->getReplacements()))->render();
+    }
+
+    protected function getStubPath(string $name): string
+    {
         $path = config('generator.stubCustomizePath', __DIR__);
 
         if (!file_exists($path . '/' . $name . '.stub')) {
             $path = __DIR__ . "/Stubs";
         }
 
-        return (new Stub($path . '/' . $name . '.stub', $this->getReplacements()))->render();
+        return $path . '/' . $name . '.stub';
     }
 
 
@@ -235,6 +245,9 @@ abstract class Generator
             case ('tests' === $class):
                 $path = config('generator.paths.tests', 'tests');
                 break;
+            case ('factories' === $class):
+                $path = config('generator.paths.factories', 'factories');
+                break;
             case ('dto' === $class):
                 $path = config('generator.paths.dto', 'dto');
                 break;
@@ -324,7 +337,7 @@ abstract class Generator
      *
      * @return string
      */
-    public function getOption(string $key, $default = null): ?string
+    public function getOption(string $key, $default = null): null|array|string
     {
         if (!$this->hasOption($key)) {
             return $default;
@@ -342,7 +355,7 @@ abstract class Generator
      *
      * @return string
      */
-    public function option(string $key, $default = null): ?string
+    public function option(string $key, $default = null): null|array|string
     {
         return $this->getOption($key, $default);
     }
@@ -355,7 +368,7 @@ abstract class Generator
      *
      * @return string|mixed
      */
-    public function __get(string $key): ?string
+    public function __get(string $key)
     {
         if (property_exists($this, $key)) {
             return $this->{$key};
