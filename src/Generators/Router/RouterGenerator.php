@@ -79,41 +79,10 @@ final class RouterGenerator extends Generator
 
     protected function beforeRun()
     {
-        $this->registerRouterInSystem();
         $this->addRouteToFile();
     }
 
-    /**
-     * @throws RouteServiceProviderNotFoundException
-     */
-    private function registerRouterInSystem(): void
-    {
-        $routeServiceProviderPath = base_path(config('generator.files.routeServiceProviderPath'));
-
-        if (!File::exists($routeServiceProviderPath)) {
-            throw new RouteServiceProviderNotFoundException('Не найдено файл RouteServiceProvider.php');
-        }
-
-        $routerProviderContent = File::get($routeServiceProviderPath);
-
-        $searchText = "Route::prefix('api')
-                ->middleware('api')
-                ->group(base_path('routes/api.php'));";
-
-        if (!Str::contains($routerProviderContent, $searchText)) {
-            throw new RouteServiceProviderNotFoundException('Не найдено prefix api в файле RouteServiceProvider.php');
-        }
-
-        $stub = $this->getStubByName('router/register_route');
-
-        if (Str::contains($routerProviderContent, $stub)) {
-            return;
-        }
-
-        File::put($routeServiceProviderPath, Str::replace($searchText, $searchText . $stub, $routerProviderContent));
-    }
-
-    private function addRouteToFile()
+    private function addRouteToFile(): void
     {
         $routeFile = $this->getPath();
 
