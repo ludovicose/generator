@@ -5,11 +5,23 @@ declare(strict_types=1);
 $NAMESPACE$
 
 use $MODULE$\DTO\Update$CLASS$DTO;
+use $MODULE$\Contracts\Repositories\Update$CLASS$Repository;
+use $MODULE$\Contracts\Queries\$CLASS$Query;
+use $MODULE$\Models\$CLASS$;
 
 final class Update$CLASS$Command
 {
-    public function __construct(public string|int $id, public Update$CLASS$DTO $dto)
+    public function __construct(private string|int $id, private Update$CLASS$DTO $dto)
     {
 
+    }
+
+    public function handle(Update$CLASS$Repository $update$CLASS$Repository, $CLASS$Query $query): $CLASS$
+    {
+        $model = $query->findById($this->id);
+$TEMPLATE$
+        $update$CLASS$Repository->update($model);
+
+        return $model;
     }
 }

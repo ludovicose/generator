@@ -52,27 +52,13 @@ $TEMPLATE$
     {
         $model = $CLASS$::factory()->create();
 
-        $response = $this->get(route('$API$.index', ['id' => $model->id]));
+        $response = $this->get(route('$API$.show', ['$API$' => $model->id]));
 
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data'  => [
-                    [
 $TEMPLATE$
-                    ]
                 ],
-                'links' => [
-                    'first',
-                    'last',
-                    'prev',
-                    'next',
-                ],
-                'meta'  => [
-                    'current_page',
-                    'from',
-                    'last_page',
-                    'links',
-                ]
             ]);
     }
 
@@ -91,11 +77,9 @@ $TEMPLATEDATA$
             $data
         );
 
-        $response->assertStatus(200)
-            ->assertJsonStructure([
-                'data' => [
-                    'id',
-                ],
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Данные успешно созданы',
             ]);
 
          $this->assertDatabaseHas($model->getTable(), [
@@ -117,11 +101,9 @@ $TEMPLATEDATA$
             $data
         );
 
-        $response->assertStatus(200)
-            ->assertJsonStructure([
-                'data' => [
-                    'id',
-                ],
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Данные успешно обновлен',
             ]);
 
          $this->assertDatabaseHas($model->getTable(), [

@@ -33,4 +33,22 @@ final class CreateCommandGenerator extends Generator
     {
         return parent::getPath() . "Create{$this->getName()}Command.php";
     }
+
+    public function getReplacements(): array
+    {
+        return array_merge(parent::getReplacements(), [
+            'template' => $this->getFieldsTemplate(),
+        ]);
+    }
+
+    protected function getFieldsTemplate(): string
+    {
+        $result = '';
+
+        foreach ($this->fields as $field) {
+            $result .= "\t\t\$model->{$field[1]} = \$this->dto->{$field[1]};\n";
+        }
+
+        return $result;
+    }
 }

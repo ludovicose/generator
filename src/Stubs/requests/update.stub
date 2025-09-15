@@ -23,31 +23,26 @@ final class Update$CLASS$Request extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
 
-    public function rules()
+    public function rules(): array
     {
         return [
 $TEMPLATE$
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [];
     }
 
-    public function getDTO()
+    public function getDTO(): Update$CLASS$DTO
     {
         return Update$CLASS$DTO::fromRequest($this);
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 }

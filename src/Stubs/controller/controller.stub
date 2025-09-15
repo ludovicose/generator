@@ -17,6 +17,8 @@ use $MODULE$\Resources\$CLASS$sResource;
 use $MODULE$\Contracts\Services\$CLASS$Service;
 use Illuminate\Contracts\Bus\Dispatcher;
 use App\Http\Resources\MessagesResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
 
 final class $CONTROLLER$Controller extends Controller
 {
@@ -87,11 +89,11 @@ final class $CONTROLLER$Controller extends Controller
      * )
      */
 
-    public function index($CLASS$ShowRequest $request): $CLASS$sResource
+    public function index($CLASS$ShowRequest $request): AnonymousResourceCollection
     {
         $this->authorize('index', [$CLASS$::class, $request]);
 
-        return new $CLASS$sResource(
+        return $CLASS$Resource::collection(
             $this->service->getAll$CLASS$($request->getDTO())
         );
     }
@@ -147,7 +149,7 @@ final class $CONTROLLER$Controller extends Controller
      *    @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/x-www-form-urlencoded",
-     *              @OA\Schema(ref="#/components/schemas/$CLASS$Request")
+     *              @OA\Schema(ref="#/components/schemas/Create$CLASS$Request")
      *         )
      *     ),
      *    @OA\Response(
@@ -157,7 +159,7 @@ final class $CONTROLLER$Controller extends Controller
      *            @OA\Schema(
      *              @OA\Property(
      *                property="data",
-     *                ref="#/components/schemas/$CLASS$Resource"
+     *                ref="#/components/schemas/MessagesResource"
      *              )
      *            )
      *        ),
@@ -176,7 +178,7 @@ final class $CONTROLLER$Controller extends Controller
 
         $this->commandDispatcher->dispatch($command);
 
-        return new MessagesResource($request->getDTO());
+        return (new MessagesResource(null))->setMessage('Данные успешно созданы');
     }
 
 
@@ -197,7 +199,7 @@ final class $CONTROLLER$Controller extends Controller
      *    @OA\RequestBody(
      *          @OA\MediaType(
      *              mediaType="application/x-www-form-urlencoded",
-     *              @OA\Schema(ref="#/components/schemas/$CLASS$Request")
+     *              @OA\Schema(ref="#/components/schemas/Update$CLASS$Request")
      *         )
      *     ),
      *    @OA\Response(
@@ -207,7 +209,7 @@ final class $CONTROLLER$Controller extends Controller
      *            @OA\Schema(
      *              @OA\Property(
      *                property="data",
-     *                ref="#/components/schemas/$CLASS$Resource"
+     *                ref="#/components/schemas/MessagesResource"
      *              )
      *            )
      *        ),
@@ -229,7 +231,7 @@ final class $CONTROLLER$Controller extends Controller
 
         $this->commandDispatcher->dispatch($command);
 
-        return new MessagesResource($request->getDTO());
+        return (new MessagesResource(null))->setMessage('Данные успешно обновлен');
     }
 
 
@@ -256,7 +258,7 @@ final class $CONTROLLER$Controller extends Controller
      *   }}
      * )
      */
-    public function destroy(int|string $id)
+    public function destroy(int|string $id): MessagesResource
     {
         $this->authorize('destroy', [$CLASS$::class, $id]);
 
@@ -264,8 +266,6 @@ final class $CONTROLLER$Controller extends Controller
 
         $this->commandDispatcher->dispatch($command);
 
-        return response()->json([
-            'message' => 'Данные успешно удалены'
-        ]);
+        return (new MessagesResource(null))->setMessage('Данные успешно удалены');
     }
 }

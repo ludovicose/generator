@@ -16,10 +16,32 @@ use Illuminate\Http\Resources\Json\JsonResource;
   */
 final class MessagesResource extends JsonResource
 {
+
+    public $with = [
+        'code' => 0,
+        'success' => true,
+        'message' => '',
+        'errors' => [],
+    ];
+
+    public function setMessage(string $message): self
+    {
+        $this->with['message'] = $message;
+
+        return $this;
+    }
+
+    public function setStatusCode(int $code): self
+    {
+        $this->response()->setStatusCode($code);
+
+        return $this;
+    }
+
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
+            'data' =>null,
         ];
     }
 }

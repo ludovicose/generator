@@ -11,7 +11,7 @@ final class $CLASS$Factory extends Factory
 {
     protected $model = $CLASS$::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
 $TEMPLATEDATA$

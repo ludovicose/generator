@@ -19,30 +19,25 @@ use $MODULE$\DTO\Create$CLASS$DTO;
 final class Create$CLASS$Request extends FormRequest
 {
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
 $TEMPLATE$
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [];
     }
 
-    public function getDTO()
+    public function getDTO(): Create$CLASS$DTO
     {
         return Create$CLASS$DTO::fromRequest($this);
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 }

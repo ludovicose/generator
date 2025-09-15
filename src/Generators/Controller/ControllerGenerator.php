@@ -59,7 +59,7 @@ final class ControllerGenerator extends Generator
             'plural'          => $this->getPluralName(),
             'singular'        => $this->getSingularName(),
             'appname'         => $this->getRootNamespace(),
-            'api'             => Str::lower($this->getModule()),
+            'api'             => Str::lower($this->getName()),
             'tag'             => $this->getModule(),
             'commentTemplate' => $this->getFieldsCommentTemplate(),
         ]);

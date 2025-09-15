@@ -18,7 +18,7 @@ return [
         'resource'           => 'Resources',
         'baseResource'       => 'app/Http/Resources',
         'providers'          => 'Providers',
-        'router'             => 'routes',
+        'router'             => 'routes/api',
         'command'            => 'Commands',
         'handler'            => 'Handlers',
         'serviceContract'    => 'Contracts/Services',
