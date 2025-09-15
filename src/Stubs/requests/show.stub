@@ -19,18 +19,18 @@ class $CLASS$ShowRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
 
-    public function rules()
+    public function rules(): array
     {
         return [];
     }
 
-    public function getDTO()
+    public function getDTO(): $CLASS$ShowDTO
     {
         return $CLASS$ShowDTO::fromRequest($this);
     }

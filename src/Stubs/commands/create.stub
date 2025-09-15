@@ -5,11 +5,23 @@ declare(strict_types=1);
 $NAMESPACE$
 
 use $MODULE$\DTO\Create$CLASS$DTO;
+use $MODULE$\Contracts\Repositories\Create$CLASS$Repository;
+use $MODULE$\Models\$CLASS$;
 
 final class Create$CLASS$Command
 {
-    public function __construct(public Create$CLASS$DTO $dto)
+    public function __construct(private Create$CLASS$DTO $dto)
     {
 
     }
+
+    public function handle(Create$CLASS$Repository $create$CLASS$Repository):  $CLASS$
+    {
+        $model = new $CLASS$();
+$TEMPLATE$
+        $create$CLASS$Repository->create($model);
+
+        return $model;
+    }
+
 }

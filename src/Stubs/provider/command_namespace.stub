@@ -1,6 +1,0 @@
-use $MODULE$\Commands\Create$CLASS$Command;
-use $MODULE$\Commands\Update$CLASS$Command;
-use $MODULE$\Commands\Remove$CLASS$Command;
-use $MODULE$\Handlers\Create$CLASS$Handler;
-use $MODULE$\Handlers\Update$CLASS$Handler;
-use $MODULE$\Handlers\Remove$CLASS$Handler;

@@ -4,10 +4,18 @@ declare(strict_types=1);
 
 $NAMESPACE$
 
+use $MODULE$\Contracts\Repositories\Remove$CLASS$Repository;
+use $MODULE$\Models\$CLASS$;
+
 final class Remove$CLASS$Command
 {
-    public function __construct(public string|int $id)
+    public function __construct(private string|int $id)
     {
 
+    }
+
+    public function handle(Remove$CLASS$Repository $remove$CLASS$Repository): void
+    {
+        $remove$CLASS$Repository->remove($this->id);
     }
 }

@@ -38,7 +38,6 @@ use Ludovicose\Generator\Generators\Requests\UpdateRequestGenerator;
 use Ludovicose\Generator\Generators\Resource\MessageResourceGenerate;
 use Ludovicose\Generator\Generators\Router\RouterGenerator;
 use Ludovicose\Generator\Generators\Resource\ResourceGenerate;
-use Ludovicose\Generator\Generators\Resource\ResourcesGenerate;
 use Ludovicose\Generator\Generators\Service\ServiceGenerator;
 use Ludovicose\Generator\Generators\Test\TestGenerator;
 
@@ -50,7 +49,7 @@ final class CodeGenerateCommand extends Command
 
     protected array $fields = [];
 
-    public function handle()
+    public function handle(): void
     {
         if ($this->option('fields')) {
             while (true) {
@@ -75,7 +74,7 @@ final class CodeGenerateCommand extends Command
         $this->laravel->call([$this, 'fire'], func_get_args());
     }
 
-    public function fire()
+    public function fire(): void
     {
         $module = $this->argument('module');
         $name   = $this->argument('name');
@@ -113,7 +112,7 @@ final class CodeGenerateCommand extends Command
      * @param $module
      * @param $name
      */
-    protected function generateRequest($module, $name)
+    protected function generateRequest($module, $name): void
     {
         try {
             (new CreateRequestGenerator([
@@ -156,20 +155,8 @@ final class CodeGenerateCommand extends Command
      * @param $module
      * @param $name
      */
-    protected function generateResource($module, $name)
+    protected function generateResource($module, $name): void
     {
-        try {
-            (new ResourcesGenerate([
-                'name'   => $name,
-                'module' => $module,
-                'fields' => $this->fields
-            ]))->run();
-
-            $this->info('Resources created successfully.');
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Resources has exists. {$exception->getMessage()}");
-        }
-
         try {
             (new ResourceGenerate([
                 'name'   => $name,
@@ -195,7 +182,7 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateController($module, $name)
+    protected function generateController($module, $name): void
     {
         try {
             (new ControllerGenerator([
@@ -214,7 +201,7 @@ final class CodeGenerateCommand extends Command
      * @param $module
      * @param $name
      */
-    protected function generateService($module, $name)
+    protected function generateService($module, $name): void
     {
         try {
             (new ServiceGenerator([
@@ -252,17 +239,6 @@ final class CodeGenerateCommand extends Command
             $this->warn("Create Command has exists. {$exception->getMessage()}");
         }
 
-        try {
-            (new CreateHandlerGenerator([
-                'name'   => $name,
-                'module' => $module,
-                'fields' => $this->fields
-            ]))->run();
-
-            $this->info('Create Handler created successfully.');
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Create Handler has exists. {$exception->getMessage()}");
-        }
 
         try {
             (new UpdateCommandGenerator([
@@ -277,18 +253,6 @@ final class CodeGenerateCommand extends Command
         }
 
         try {
-            (new UpdateHandlerGenerator([
-                'name'   => $name,
-                'module' => $module,
-                'fields' => $this->fields
-            ]))->run();
-
-            $this->info('Update Handler created successfully.');
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Update Handler has exists. {$exception->getMessage()}");
-        }
-
-        try {
             (new RemoveCommandGenerator([
                 'name'   => $name,
                 'module' => $module,
@@ -299,22 +263,9 @@ final class CodeGenerateCommand extends Command
         } catch (FileAlreadyExistsExceptions $exception) {
             $this->warn("Remove Command has exists. {$exception->getMessage()}");
         }
-
-        try {
-            (new RemoveHandlerGenerator([
-                'name'   => $name,
-                'module' => $module,
-                'fields' => $this->fields
-            ]))->run();
-
-            $this->info('Remove Handler created successfully.');
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("Remove Handler has exists. {$exception->getMessage()}");
-        }
-
     }
 
-    protected function generateModel($module, $name)
+    protected function generateModel($module, $name): void
     {
         try {
             (new ModelGenerator([
@@ -333,7 +284,7 @@ final class CodeGenerateCommand extends Command
      * @param $module
      * @param $name
      */
-    protected function generateRepository($module, $name)
+    protected function generateRepository($module, $name): void
     {
         try {
             (new RepositoryCreateContractGenerator([
@@ -421,7 +372,7 @@ final class CodeGenerateCommand extends Command
     }
 
 
-    protected function generateDto($module, $name)
+    protected function generateDto($module, $name): void
     {
         try {
             (new ShowDTOGenerator([
@@ -460,20 +411,8 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateProviders($module, $name)
+    protected function generateProviders($module, $name): void
     {
-        try {
-            (new CommandServiceProviderGenerator([
-                'name'   => $name,
-                'module' => $module,
-                'fields' => $this->fields
-            ]))->run();
-
-            $this->info('CommandServiceProvider created successfully.');
-        } catch (FileAlreadyExistsExceptions $exception) {
-            $this->warn("CommandServiceProvider has exists. {$exception->getMessage()}");
-        }
-
         try {
             (new RepositoryServiceProviderGenerator([
                 'name'   => $name,
@@ -513,7 +452,7 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateTest($module, $name)
+    protected function generateTest($module, $name): void
     {
         try {
             (new TestGenerator([
@@ -528,7 +467,7 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateRouter($module, $name)
+    protected function generateRouter($module, $name): void
     {
         try {
             (new RouterGenerator([
@@ -545,7 +484,7 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generateFactory($module, $name)
+    protected function generateFactory($module, $name): void
     {
         try {
             (new FactoryGenerator([
@@ -560,7 +499,7 @@ final class CodeGenerateCommand extends Command
         }
     }
 
-    protected function generatePolicy($module, $name)
+    protected function generatePolicy($module, $name): void
     {
         try {
             (new PolicyGenerate([

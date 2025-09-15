@@ -15,6 +15,7 @@ final class $SERVICE$ implements $SERVICE$Contract
 {
     public function getAll$CLASS$($CLASS$ShowDTO $dto): LengthAwarePaginator
     {
+        /** @var Pagination$CLASS$Query::class $query */
         $query = app()->make(Pagination$CLASS$Query::class);
 
         return $query->pagination($dto);
@@ -22,6 +23,7 @@ final class $SERVICE$ implements $SERVICE$Contract
 
     public function get$CLASS$ById(int|string $id): $CLASS$
     {
+        /** @var $CLASS$Query::class $query */
         $query = app()->make($CLASS$Query::class);
 
         return $query->findById($id);
